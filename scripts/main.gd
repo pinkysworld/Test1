@@ -9,6 +9,9 @@ const AudioManager = preload("res://scripts/audio_manager.gd")
 @onready var config_panel: Control = %ConfigPanel
 @onready var screen_title: Label = %ScreenTitle
 @onready var screen_body: RichTextLabel = %ScreenBody
+@onready var action_row: HBoxContainer = %ActionRow
+@onready var primary_action_button: Button = %PrimaryActionButton
+@onready var secondary_action_button: Button = %SecondaryActionButton
 @onready var schedule_body: RichTextLabel = %ScheduleBody
 @onready var sim_body: RichTextLabel = %SimBody
 @onready var end_body: RichTextLabel = %EndBody
@@ -22,6 +25,7 @@ const AudioManager = preload("res://scripts/audio_manager.gd")
 
 var game_state := GameState.new()
 var audio_manager := AudioManager.new()
+var current_screen_id: String = ""
 
 func _ready() -> void:
 	add_child(game_state)
@@ -50,11 +54,13 @@ func _show_hub() -> void:
 	_set_all_panels_hidden()
 	hub_panel.visible = true
 
-func _show_screen(title: String, body: String) -> void:
+func _show_screen(title: String, body: String, screen_id: String = "") -> void:
 	_set_all_panels_hidden()
 	screens_panel.visible = true
 	screen_title.text = title
 	screen_body.text = body
+	current_screen_id = screen_id
+	_configure_screen_actions()
 
 func _show_schedule() -> void:
 	_set_all_panels_hidden()
@@ -107,44 +113,45 @@ func _set_all_panels_hidden() -> void:
 	%SchedulePanel.visible = false
 	%SimPanel.visible = false
 	%EndPanel.visible = false
+	action_row.visible = false
 
 func _on_hub_button_pressed(location: String) -> void:
 	_play_location_sound(location)
 	match location:
 		"staff":
-			_show_screen("Staff Office", _staff_body())
+			_show_screen("Staff Office", _staff_body(), "staff")
 		"programming":
-			_show_screen("Programming Library", _program_body())
+			_show_screen("Programming Library", _program_body(), "programming")
 		"news":
-			_show_screen("News Desk", "Wire reports are buzzing. Assign a researcher to scout fresh segments.")
+			_show_screen("News Desk", "Wire reports are buzzing. Assign a researcher to scout fresh segments.", "news")
 		"ads":
-			_show_screen("Ad Sales", _ads_body())
+			_show_screen("Ad Sales", _ads_body(), "ads")
 		"finance":
-			_show_screen("Finance", _finance_body())
+			_show_screen("Finance", _finance_body(), "finance")
 		"intel":
-			_show_screen("Competitor Intel", _intel_body())
+			_show_screen("Competitor Intel", _intel_body(), "intel")
 		"agency":
-			_show_screen("Advertisement Agency", _agency_body())
+			_show_screen("Advertisement Agency", _agency_body(), "agency")
 		"market":
-			_show_screen("Movie Market", _market_body())
+			_show_screen("Movie Market", _market_body(), "market")
 		"content":
-			_show_screen("Content Agency", _content_body())
+			_show_screen("Content Agency", _content_body(), "content")
 		"transmission":
-			_show_screen("Transmission Office", _transmission_body())
+			_show_screen("Transmission Office", _transmission_body(), "transmission")
 		"pr":
-			_show_screen("PR Studio", _pr_body())
+			_show_screen("PR Studio", _pr_body(), "pr")
 		"archive":
-			_show_screen("Archive Vault", _archive_body())
+			_show_screen("Archive Vault", _archive_body(), "archive")
 		"research":
-			_show_screen("Research Lab", _research_body())
+			_show_screen("Research Lab", _research_body(), "research")
 		"lounge":
-			_show_screen("Staff Lounge", _lounge_body())
+			_show_screen("Staff Lounge", _lounge_body(), "lounge")
 		"talent":
-			_show_screen("Talent Agency", _talent_body())
+			_show_screen("Talent Agency", _talent_body(), "talent")
 		"studio":
-			_show_screen("Studio Lot", _studio_body())
+			_show_screen("Studio Lot", _studio_body(), "studio")
 		"betty":
-			_show_screen("Betty's Lounge", _betty_body())
+			_show_screen("Betty's Lounge", _betty_body(), "betty")
 		"plan":
 			_show_schedule()
 		"simulate":
@@ -189,6 +196,36 @@ func _on_sfx_volume_changed(value: float) -> void:
 
 func _on_music_volume_changed(value: float) -> void:
 	audio_manager.set_music_volume(value)
+
+func _on_screen_action(action: String) -> void:
+	match current_screen_id:
+		"transmission":
+			var message := ""
+			if action == "primary":
+				message = game_state.buy_next_transmission_station()
+			else:
+				message = game_state.buy_best_transmission_station()
+			_update_status(message)
+			_show_screen("Transmission Office", _transmission_body(), "transmission")
+		"betty":
+			_update_status("Betty is impressed by your dedication!")
+			_show_screen("Betty's Lounge", _betty_body(), "betty")
+
+func _configure_screen_actions() -> void:
+	action_row.visible = false
+	primary_action_button.visible = false
+	secondary_action_button.visible = false
+	match current_screen_id:
+		"transmission":
+			action_row.visible = true
+			primary_action_button.visible = true
+			secondary_action_button.visible = true
+			primary_action_button.text = "Buy Next Tower"
+			secondary_action_button.text = "Buy Best Boost"
+		"betty":
+			action_row.visible = true
+			primary_action_button.visible = true
+			primary_action_button.text = "Cheer Betty"
 
 func _play_location_sound(location: String) -> void:
 	var tones = {
@@ -269,6 +306,7 @@ func _transmission_body() -> String:
 		var owned = game_state.station.transmission_stations.has(offer.id)
 		var status = "Owned" if owned else "$%d" % int(offer.cost)
 		lines.append("%s | Boost %.2f | %s" % [offer.name, offer.audience_boost, status])
+	lines.append("Use the action buttons to purchase the next tower or the best boost.")
 	return "\n".join(lines)
 
 func _pr_body() -> String:

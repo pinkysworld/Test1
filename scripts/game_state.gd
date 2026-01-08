@@ -150,6 +150,28 @@ func buy_transmission_station(station_id: String) -> bool:
 			return true
 	return false
 
+func buy_next_transmission_station() -> String:
+	var offers = transmission_offers.duplicate()
+	offers.sort_custom(func(a, b): return int(a.cost) < int(b.cost))
+	for offer in offers:
+		if station.transmission_stations.has(offer.id):
+			continue
+		if buy_transmission_station(offer.id):
+			return "Purchased %s." % offer.name
+		return "Not enough cash for %s." % offer.name
+	return "All transmission stations acquired."
+
+func buy_best_transmission_station() -> String:
+	var offers = transmission_offers.duplicate()
+	offers.sort_custom(func(a, b): return float(a.audience_boost) > float(b.audience_boost))
+	for offer in offers:
+		if station.transmission_stations.has(offer.id):
+			continue
+		if buy_transmission_station(offer.id):
+			return "Purchased %s." % offer.name
+		return "Not enough cash for %s." % offer.name
+	return "All transmission stations acquired."
+
 func _station_signal_bonus() -> float:
 	var bonus := 0.0
 	for offer in transmission_offers:

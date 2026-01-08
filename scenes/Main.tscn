@@ -279,6 +279,18 @@ fit_content = true
 scroll_active = false
 text = "Body"
 
+[node name="ActionRow" type="HBoxContainer" parent="ScreensPanel/ScreenContents"]
+unique_name_in_owner = true
+visible = false
+
+[node name="PrimaryActionButton" type="Button" parent="ScreensPanel/ScreenContents/ActionRow"]
+unique_name_in_owner = true
+text = "Primary Action"
+
+[node name="SecondaryActionButton" type="Button" parent="ScreensPanel/ScreenContents/ActionRow"]
+unique_name_in_owner = true
+text = "Secondary Action"
+
 [node name="BackButton" type="Button" parent="ScreensPanel/ScreenContents"]
 text = "Back to Hub"
 
@@ -469,6 +481,8 @@ text = "Back to Hub"
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/SimButton" to="Main" method="_on_hub_button_pressed" binds=["simulate"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/EndButton" to="Main" method="_on_hub_button_pressed" binds=["end"]]
 [connection signal="pressed" from="ScreensPanel/ScreenContents/BackButton" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="ScreensPanel/ScreenContents/ActionRow/PrimaryActionButton" to="Main" method="_on_screen_action" binds=["primary"]]
+[connection signal="pressed" from="ScreensPanel/ScreenContents/ActionRow/SecondaryActionButton" to="Main" method="_on_screen_action" binds=["secondary"]]
 [connection signal="pressed" from="MenuPanel/MenuContents/MenuConfig" to="Main" method="_on_menu_action" binds=["config"]]
 [connection signal="pressed" from="MenuPanel/MenuContents/MenuSave" to="Main" method="_on_menu_action" binds=["save"]]
 [connection signal="pressed" from="MenuPanel/MenuContents/MenuLoad" to="Main" method="_on_menu_action" binds=["load"]]
