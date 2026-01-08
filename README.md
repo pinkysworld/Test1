@@ -3,7 +3,7 @@
 Cartoonish TV-station management prototype inspired by classic TV tycoon games. Includes an adventure-style hub, scheduling, ad sales, and a daily simulation loop scaffolded in Godot 4.2.
 
 ## Features in this prototype
-- Adventure-style hub with locations for Staff, Programming Library, News Desk, Ad Sales, Finance, Competitor Intel, Ad Agency, and Movie Market.
+- Adventure-style hub with locations for Staff, Programming Library, News Desk, Ad Sales, Finance, Competitor Intel, Ad Agency, Movie Market, PR Studio, Archive Vault, Research Lab, and Staff Lounge.
 - Plan/Simulate/End-of-day phases with a seeded schedule.
 - Data-driven programs (series/news/movies), ad contracts, staff, and competitor profiles.
 - Movie licensing includes rental and purchase pricing to support a movie market flow.

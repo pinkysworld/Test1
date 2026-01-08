@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/textures/logo_madtv.svg" id="2"]
@@ -13,6 +13,10 @@
 [ext_resource type="Texture2D" path="res://assets/textures/icon_agency.svg" id="11"]
 [ext_resource type="Texture2D" path="res://assets/textures/icon_market.svg" id="12"]
 [ext_resource type="Texture2D" path="res://assets/textures/icon_menu.svg" id="13"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_pr.svg" id="14"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_archive.svg" id="15"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_research.svg" id="16"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_lounge.svg" id="17"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -147,6 +151,26 @@ icon_alignment = 1
 [node name="MarketButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Movie Market"
 icon = ExtResource("12")
+icon_alignment = 1
+
+[node name="PrButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "PR Studio"
+icon = ExtResource("14")
+icon_alignment = 1
+
+[node name="ArchiveButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Archive Vault"
+icon = ExtResource("15")
+icon_alignment = 1
+
+[node name="ResearchButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Research Lab"
+icon = ExtResource("16")
+icon_alignment = 1
+
+[node name="LoungeButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Staff Lounge"
+icon = ExtResource("17")
 icon_alignment = 1
 
 [node name="PlanButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
@@ -350,6 +374,10 @@ text = "Back to Hub"
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/IntelButton" to="Main" method="_on_hub_button_pressed" binds=["intel"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/AgencyButton" to="Main" method="_on_hub_button_pressed" binds=["agency"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/MarketButton" to="Main" method="_on_hub_button_pressed" binds=["market"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/PrButton" to="Main" method="_on_hub_button_pressed" binds=["pr"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ArchiveButton" to="Main" method="_on_hub_button_pressed" binds=["archive"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ResearchButton" to="Main" method="_on_hub_button_pressed" binds=["research"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/LoungeButton" to="Main" method="_on_hub_button_pressed" binds=["lounge"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/PlanButton" to="Main" method="_on_hub_button_pressed" binds=["plan"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/SimButton" to="Main" method="_on_hub_button_pressed" binds=["simulate"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/EndButton" to="Main" method="_on_hub_button_pressed" binds=["end"]]

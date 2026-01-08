@@ -125,6 +125,14 @@ func _on_hub_button_pressed(location: String) -> void:
 			_show_screen("Advertisement Agency", _agency_body())
 		"market":
 			_show_screen("Movie Market", _market_body())
+		"pr":
+			_show_screen("PR Studio", _pr_body())
+		"archive":
+			_show_screen("Archive Vault", _archive_body())
+		"research":
+			_show_screen("Research Lab", _research_body())
+		"lounge":
+			_show_screen("Staff Lounge", _lounge_body())
 		"plan":
 			_show_schedule()
 		"simulate":
@@ -177,6 +185,10 @@ func _play_location_sound(location: String) -> void:
 		"intel": 560.0,
 		"agency": 640.0,
 		"market": 400.0,
+		"pr": 620.0,
+		"archive": 340.0,
+		"research": 700.0,
+		"lounge": 300.0,
 		"plan": 500.0,
 		"simulate": 720.0,
 		"end": 300.0,
@@ -215,6 +227,18 @@ func _market_body() -> String:
 		if program.category == "movie":
 			lines.append("%s | %s for $%d" % [program.title, program.license_type, program.purchase_price])
 	return "\n".join(lines)
+
+func _pr_body() -> String:
+	return "PR stunts raise reputation. Book interviews, viral teasers, and scandal control."
+
+func _archive_body() -> String:
+	return "Archive Vault stores reruns and classic specials. Unlock retro marathons here."
+
+func _research_body() -> String:
+	return "Research Lab tracks viewer trends and competitor habits. Assign analysts for new intel."
+
+func _lounge_body() -> String:
+	return "Staff Lounge restores morale. Add snacks, arcade breaks, and pep talks."
 
 func _finance_body() -> String:
 	return "Cash: $%d\nDebt: $%d\nReputation: %.2f" % [game_state.station.cash, game_state.station.debt, game_state.station.reputation]
