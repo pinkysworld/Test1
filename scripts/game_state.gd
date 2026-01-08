@@ -11,6 +11,7 @@ var difficulty: String = "Rookie"
 var save_path: String = "user://madtv_save.json"
 var betty_interest: int = 0
 var win_conditions: Array = []
+var competitor_reports: Array[String] = []
 
 func _ready() -> void:
 	_load_data()
@@ -147,6 +148,7 @@ func buy_transmission_station(station_id: String) -> bool:
 				return false
 			station.cash -= int(offer.cost)
 			station.transmission_stations.append(station_id)
+			station.audience_share = min(0.5, station.audience_share + float(offer.audience_boost) * 0.5)
 			return true
 	return false
 
@@ -180,6 +182,7 @@ func _station_signal_bonus() -> float:
 	return bonus
 
 func _process_competitor_ai() -> void:
+	competitor_reports = []
 	for rival in competitors:
 		var pick := rival.pick_program(station.library)
 		if pick == null:
@@ -187,8 +190,10 @@ func _process_competitor_ai() -> void:
 		if rival.aggressiveness > 0.6 and pick.popularity > 0.7:
 			station.reputation = max(0.0, station.reputation - 0.01)
 			station.audience_share = max(0.05, station.audience_share - 0.005)
+			competitor_reports.append("%s outbid on %s." % [rival.name, pick.title])
 		else:
 			station.reputation = min(1.0, station.reputation + 0.005)
+			competitor_reports.append("%s played it safe with %s." % [rival.name, pick.title])
 
 func _update_betty_interest(revenue: int) -> void:
 	if station.reputation >= 0.5:
@@ -207,6 +212,16 @@ func check_win_conditions() -> Array:
 	if station.cash >= 150000:
 		wins.append("mogul")
 	return wins
+
+func ad_tier_label() -> String:
+	var reach = station.audience_share + _station_signal_bonus()
+	if reach >= 0.25:
+		return "Premium"
+	if reach >= 0.18:
+		return "Gold"
+	if reach >= 0.12:
+		return "Silver"
+	return "Local"
 
 func set_difficulty(value: String) -> void:
 	difficulty = value

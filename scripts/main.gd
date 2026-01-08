@@ -273,7 +273,10 @@ func _ads_body() -> String:
 	return "\n".join(lines)
 
 func _agency_body() -> String:
-	var lines: Array[String] = ["Agency perks: negotiate bonuses, extend deadlines, and swap slots."]
+	var lines: Array[String] = [
+		"Agency perks: negotiate bonuses, extend deadlines, and swap slots.",
+		"Ad tier: %s | Audience Share: %.2f" % [game_state.ad_tier_label(), game_state.station.audience_share],
+	]
 	for ad in game_state.station.ads:
 		var windows = ", ".join(ad.constraints.get("time_windows", []))
 		var genres = ", ".join(ad.constraints.get("genre_restrictions", []))
@@ -343,7 +346,11 @@ func _finance_body() -> String:
 	return "Cash: $%d\nDebt: $%d\nReputation: %.2f" % [game_state.station.cash, game_state.station.debt, game_state.station.reputation]
 
 func _intel_body() -> String:
-	var lines: Array[String] = []
+	var lines: Array[String] = ["Competitor notes:"]
 	for rival in game_state.competitors:
 		lines.append("%s | Aggression %.2f" % [rival.name, rival.aggressiveness])
+	if not game_state.competitor_reports.is_empty():
+		lines.append("Recent moves:")
+		for report in game_state.competitor_reports:
+			lines.append("- %s" % report)
 	return "\n".join(lines)
