@@ -5,6 +5,7 @@ const Models = preload("res://scripts/models.gd")
 var day: int = 1
 var station := Models.Station.new()
 var competitors: Array[Models.Competitor] = []
+var content_offers: Array = []
 var difficulty: String = "Rookie"
 var save_path: String = "user://madtv_save.json"
 
@@ -17,6 +18,7 @@ func _load_data() -> void:
 	station.ads = _load_ads()
 	station.staff = _load_staff()
 	competitors = _load_competitors()
+	content_offers = _load_content_offers()
 
 func _load_json(path: String) -> Array:
 	var file := FileAccess.open(path, FileAccess.READ)
@@ -52,6 +54,9 @@ func _load_competitors() -> Array[Models.Competitor]:
 	for entry in _load_json("res://data/competitors.json"):
 		list.append(Models.Competitor.new(entry))
 	return list
+
+func _load_content_offers() -> Array:
+	return _load_json("res://data/content_agency.json")
 
 func _seed_schedule() -> void:
 	if station.library.is_empty():

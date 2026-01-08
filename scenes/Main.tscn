@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/textures/logo_madtv.svg" id="2"]
@@ -17,6 +17,9 @@
 [ext_resource type="Texture2D" path="res://assets/textures/icon_archive.svg" id="15"]
 [ext_resource type="Texture2D" path="res://assets/textures/icon_research.svg" id="16"]
 [ext_resource type="Texture2D" path="res://assets/textures/icon_lounge.svg" id="17"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_content_agency.svg" id="18"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_talent.svg" id="19"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_studio.svg" id="20"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -31,6 +34,21 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0.11, 0.12, 0.16, 1)
+
+[node name="GlowLeft" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 0.5
+anchor_bottom = 1.0
+color = Color(0.18, 0.08, 0.32, 0.25)
+
+[node name="GlowRight" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.06, 0.2, 0.3, 0.25)
 
 [node name="TopBar" type="HBoxContainer" parent="."]
 layout_mode = 3
@@ -144,13 +162,28 @@ icon = ExtResource("10")
 icon_alignment = 1
 
 [node name="AgencyButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
-text = "Ad Agency"
+text = "Advertisement Agency"
 icon = ExtResource("11")
 icon_alignment = 1
 
 [node name="MarketButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Movie Market"
 icon = ExtResource("12")
+icon_alignment = 1
+
+[node name="ContentButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Content Agency"
+icon = ExtResource("18")
+icon_alignment = 1
+
+[node name="TalentButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Talent Agency"
+icon = ExtResource("19")
+icon_alignment = 1
+
+[node name="StudioButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Studio Lot"
+icon = ExtResource("20")
 icon_alignment = 1
 
 [node name="PrButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
@@ -272,7 +305,7 @@ unique_name_in_owner = true
 min_value = -24.0
 max_value = 6.0
 step = 1.0
-value = -6.0
+value = -10.0
 
 [node name="SfxLabel" type="Label" parent="ConfigPanel/ConfigContents"]
 text = "SFX Volume"
@@ -282,7 +315,17 @@ unique_name_in_owner = true
 min_value = -24.0
 max_value = 6.0
 step = 1.0
-value = -3.0
+value = -6.0
+
+[node name="MusicLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+min_value = -24.0
+max_value = 6.0
+step = 1.0
+value = -14.0
 
 [node name="ConfigBack" type="Button" parent="ConfigPanel/ConfigContents"]
 text = "Back to Hub"
@@ -374,6 +417,9 @@ text = "Back to Hub"
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/IntelButton" to="Main" method="_on_hub_button_pressed" binds=["intel"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/AgencyButton" to="Main" method="_on_hub_button_pressed" binds=["agency"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/MarketButton" to="Main" method="_on_hub_button_pressed" binds=["market"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ContentButton" to="Main" method="_on_hub_button_pressed" binds=["content"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/TalentButton" to="Main" method="_on_hub_button_pressed" binds=["talent"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/StudioButton" to="Main" method="_on_hub_button_pressed" binds=["studio"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/PrButton" to="Main" method="_on_hub_button_pressed" binds=["pr"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/ArchiveButton" to="Main" method="_on_hub_button_pressed" binds=["archive"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/ResearchButton" to="Main" method="_on_hub_button_pressed" binds=["research"]]
@@ -390,6 +436,7 @@ text = "Back to Hub"
 [connection signal="item_selected" from="ConfigPanel/ConfigContents/DifficultySelect" to="Main" method="_on_difficulty_selected"]
 [connection signal="value_changed" from="ConfigPanel/ConfigContents/MasterSlider" to="Main" method="_on_master_volume_changed"]
 [connection signal="value_changed" from="ConfigPanel/ConfigContents/SfxSlider" to="Main" method="_on_sfx_volume_changed"]
+[connection signal="value_changed" from="ConfigPanel/ConfigContents/MusicSlider" to="Main" method="_on_music_volume_changed"]
 [connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
 [connection signal="pressed" from="SimPanel/SimContents/SimBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
 [connection signal="pressed" from="EndPanel/EndContents/EndBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]

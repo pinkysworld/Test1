@@ -76,5 +76,83 @@
     "repeat_penalty": 0.1,
     "license_type": "rent",
     "purchase_price": 0
+  },
+  {
+    "id": "show_kitchen_capers",
+    "title": "Kitchen Capers",
+    "category": "series",
+    "duration": 60,
+    "cost": 1600,
+    "popularity": 0.66,
+    "target_demo_tags": ["family", "food"],
+    "freshness": 0.82,
+    "repeat_penalty": 0.12,
+    "license_type": "rent",
+    "purchase_price": 14000
+  },
+  {
+    "id": "show_dragons_den",
+    "title": "Dragons at Dawn",
+    "category": "series",
+    "duration": 90,
+    "cost": 2200,
+    "popularity": 0.72,
+    "target_demo_tags": ["teens", "fantasy"],
+    "freshness": 0.78,
+    "repeat_penalty": 0.14,
+    "license_type": "buy",
+    "purchase_price": 21000
+  },
+  {
+    "id": "show_rerun_classics",
+    "title": "Archive Laugh Track",
+    "category": "series",
+    "duration": 60,
+    "cost": 900,
+    "popularity": 0.52,
+    "target_demo_tags": ["adult", "comedy"],
+    "freshness": 0.6,
+    "repeat_penalty": 0.3,
+    "license_type": "buy",
+    "purchase_price": 8000
+  },
+  {
+    "id": "show_astro_movie",
+    "title": "Astro Heist",
+    "category": "movie",
+    "duration": 110,
+    "cost": 3600,
+    "popularity": 0.79,
+    "target_demo_tags": ["adult", "sci-fi"],
+    "freshness": 0.76,
+    "repeat_penalty": 0.18,
+    "license_type": "buy",
+    "purchase_price": 26000
+  },
+  {
+    "id": "show_morning_banter",
+    "title": "Morning Banter Club",
+    "category": "news",
+    "duration": 30,
+    "cost": 800,
+    "popularity": 0.58,
+    "target_demo_tags": ["family", "news"],
+    "freshness": 0.9,
+    "repeat_penalty": 0.1,
+    "license_type": "rent",
+    "purchase_price": 0
+  },
+  {
+    "id": "show_sports_blast",
+    "title": "Sports Blast 24",
+    "category": "series",
+    "duration": 60,
+    "cost": 2100,
+    "popularity": 0.7,
+    "target_demo_tags": ["teens", "sports"],
+    "freshness": 0.8,
+    "repeat_penalty": 0.12,
+    "license_type": "rent",
+    "purchase_price": 16000
   }
 ]

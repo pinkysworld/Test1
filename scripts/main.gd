@@ -18,6 +18,7 @@ const AudioManager = preload("res://scripts/audio_manager.gd")
 @onready var difficulty_select: OptionButton = %DifficultySelect
 @onready var master_slider: HSlider = %MasterSlider
 @onready var sfx_slider: HSlider = %SfxSlider
+@onready var music_slider: HSlider = %MusicSlider
 
 var game_state := GameState.new()
 var audio_manager := AudioManager.new()
@@ -38,6 +39,7 @@ func _setup_config() -> void:
 	difficulty_select.select(max(selected_index, 0))
 	master_slider.value = audio_manager.master_volume_db
 	sfx_slider.value = audio_manager.sfx_volume_db
+	music_slider.value = audio_manager.music_volume_db
 
 func _update_status(message: String = "") -> void:
 	cash_label.text = "Cash: $%s" % game_state.station.cash
@@ -125,6 +127,8 @@ func _on_hub_button_pressed(location: String) -> void:
 			_show_screen("Advertisement Agency", _agency_body())
 		"market":
 			_show_screen("Movie Market", _market_body())
+		"content":
+			_show_screen("Content Agency", _content_body())
 		"pr":
 			_show_screen("PR Studio", _pr_body())
 		"archive":
@@ -133,6 +137,10 @@ func _on_hub_button_pressed(location: String) -> void:
 			_show_screen("Research Lab", _research_body())
 		"lounge":
 			_show_screen("Staff Lounge", _lounge_body())
+		"talent":
+			_show_screen("Talent Agency", _talent_body())
+		"studio":
+			_show_screen("Studio Lot", _studio_body())
 		"plan":
 			_show_schedule()
 		"simulate":
@@ -175,6 +183,9 @@ func _on_master_volume_changed(value: float) -> void:
 func _on_sfx_volume_changed(value: float) -> void:
 	audio_manager.set_sfx_volume(value)
 
+func _on_music_volume_changed(value: float) -> void:
+	audio_manager.set_music_volume(value)
+
 func _play_location_sound(location: String) -> void:
 	var tones = {
 		"staff": 440.0,
@@ -185,10 +196,13 @@ func _play_location_sound(location: String) -> void:
 		"intel": 560.0,
 		"agency": 640.0,
 		"market": 400.0,
+		"content": 580.0,
 		"pr": 620.0,
 		"archive": 340.0,
 		"research": 700.0,
 		"lounge": 300.0,
+		"talent": 660.0,
+		"studio": 520.0,
 		"plan": 500.0,
 		"simulate": 720.0,
 		"end": 300.0,
@@ -218,7 +232,16 @@ func _ads_body() -> String:
 func _agency_body() -> String:
 	var lines: Array[String] = ["Agency perks: negotiate bonuses, extend deadlines, and swap slots."]
 	for ad in game_state.station.ads:
-		lines.append("%s | Target %s | Deadline Day %d" % [ad.advertiser_name, ", ".join(ad.target_demo), ad.deadline_day])
+		var windows = ", ".join(ad.constraints.get("time_windows", []))
+		var genres = ", ".join(ad.constraints.get("genre_restrictions", []))
+		lines.append("%s | Target %s | Slots %d | Payout $%d | Window %s | Genres %s" % [
+			ad.advertiser_name,
+			", ".join(ad.target_demo),
+			ad.required_slots,
+			ad.payout,
+			windows,
+			genres,
+		])
 	return "\n".join(lines)
 
 func _market_body() -> String:
@@ -226,6 +249,12 @@ func _market_body() -> String:
 	for program in game_state.station.library:
 		if program.category == "movie":
 			lines.append("%s | %s for $%d" % [program.title, program.license_type, program.purchase_price])
+	return "\n".join(lines)
+
+func _content_body() -> String:
+	var lines: Array[String] = ["Content Agency offers fresh packages for rent or sale:"]
+	for offer in game_state.content_offers:
+		lines.append("%s [%s] | %s $%d | Pop %.2f" % [offer.title, offer.category, offer.license_type, offer.price, offer.popularity])
 	return "\n".join(lines)
 
 func _pr_body() -> String:
@@ -239,6 +268,12 @@ func _research_body() -> String:
 
 func _lounge_body() -> String:
 	return "Staff Lounge restores morale. Add snacks, arcade breaks, and pep talks."
+
+func _talent_body() -> String:
+	return "Talent Agency recruits hosts and celebrity guests. Negotiate contracts for boosts."
+
+func _studio_body() -> String:
+	return "Studio Lot produces original shows. Invest in sets, pilots, and live events."
 
 func _finance_body() -> String:
 	return "Cash: $%d\nDebt: $%d\nReputation: %.2f" % [game_state.station.cash, game_state.station.debt, game_state.station.reputation]

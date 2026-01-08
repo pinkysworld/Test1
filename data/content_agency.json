@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Galactic Groaners",
+    "category": "series",
+    "license_type": "rent",
+    "price": 12000,
+    "popularity": 0.68,
+    "duration": 60
+  },
+  {
+    "title": "Thunderflex Championship",
+    "category": "series",
+    "license_type": "buy",
+    "price": 22000,
+    "popularity": 0.74,
+    "duration": 60
+  },
+  {
+    "title": "Neon Detective: Night Shift",
+    "category": "series",
+    "license_type": "rent",
+    "price": 18000,
+    "popularity": 0.78,
+    "duration": 120
+  },
+  {
+    "title": "Bunny Rangers: The Feature",
+    "category": "movie",
+    "license_type": "buy",
+    "price": 30000,
+    "popularity": 0.84,
+    "duration": 120
+  },
+  {
+    "title": "Meteor Munchers",
+    "category": "movie",
+    "license_type": "rent",
+    "price": 14000,
+    "popularity": 0.65,
+    "duration": 90
+  },
+  {
+    "title": "City Weather Chaos",
+    "category": "news",
+    "license_type": "rent",
+    "price": 6000,
+    "popularity": 0.55,
+    "duration": 30
+  }
+]
