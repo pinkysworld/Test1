@@ -1,0 +1,23 @@
+[
+  {
+    "id": "tower_metro",
+    "name": "Metro Relay Tower",
+    "cost": 25000,
+    "audience_boost": 0.03,
+    "description": "Extends signal across downtown districts."
+  },
+  {
+    "id": "tower_harbor",
+    "name": "Harbor Signal Mast",
+    "cost": 32000,
+    "audience_boost": 0.04,
+    "description": "Covers coastal neighborhoods and the ferry commute."
+  },
+  {
+    "id": "tower_hills",
+    "name": "Hilltop Broadcast Beacon",
+    "cost": 42000,
+    "audience_boost": 0.06,
+    "description": "Premium reach with high-altitude broadcast range."
+  }
+]

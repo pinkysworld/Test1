@@ -129,6 +129,8 @@ func _on_hub_button_pressed(location: String) -> void:
 			_show_screen("Movie Market", _market_body())
 		"content":
 			_show_screen("Content Agency", _content_body())
+		"transmission":
+			_show_screen("Transmission Office", _transmission_body())
 		"pr":
 			_show_screen("PR Studio", _pr_body())
 		"archive":
@@ -141,6 +143,8 @@ func _on_hub_button_pressed(location: String) -> void:
 			_show_screen("Talent Agency", _talent_body())
 		"studio":
 			_show_screen("Studio Lot", _studio_body())
+		"betty":
+			_show_screen("Betty's Lounge", _betty_body())
 		"plan":
 			_show_schedule()
 		"simulate":
@@ -197,12 +201,14 @@ func _play_location_sound(location: String) -> void:
 		"agency": 640.0,
 		"market": 400.0,
 		"content": 580.0,
+		"transmission": 460.0,
 		"pr": 620.0,
 		"archive": 340.0,
 		"research": 700.0,
 		"lounge": 300.0,
 		"talent": 660.0,
 		"studio": 520.0,
+		"betty": 740.0,
 		"plan": 500.0,
 		"simulate": 720.0,
 		"end": 300.0,
@@ -257,6 +263,14 @@ func _content_body() -> String:
 		lines.append("%s [%s] | %s $%d | Pop %.2f" % [offer.title, offer.category, offer.license_type, offer.price, offer.popularity])
 	return "\n".join(lines)
 
+func _transmission_body() -> String:
+	var lines: Array[String] = ["Buy transmission stations to expand reach:"]
+	for offer in game_state.transmission_offers:
+		var owned = game_state.station.transmission_stations.has(offer.id)
+		var status = "Owned" if owned else "$%d" % int(offer.cost)
+		lines.append("%s | Boost %.2f | %s" % [offer.name, offer.audience_boost, status])
+	return "\n".join(lines)
+
 func _pr_body() -> String:
 	return "PR stunts raise reputation. Book interviews, viral teasers, and scandal control."
 
@@ -274,6 +288,18 @@ func _talent_body() -> String:
 
 func _studio_body() -> String:
 	return "Studio Lot produces original shows. Invest in sets, pilots, and live events."
+
+func _betty_body() -> String:
+	var wins = game_state.check_win_conditions()
+	var lines: Array[String] = [
+		"Betty watches the ratings with interest.",
+		"Interest points: %d" % game_state.betty_interest,
+	]
+	for goal in game_state.win_conditions:
+		lines.append("Goal: %s | %s" % [goal.title, goal.requirement])
+	if not wins.is_empty():
+		lines.append("Win paths achieved: %s" % ", ".join(wins))
+	return "\n".join(lines)
 
 func _finance_body() -> String:
 	return "Cash: $%d\nDebt: $%d\nReputation: %.2f" % [game_state.station.cash, game_state.station.debt, game_state.station.reputation]

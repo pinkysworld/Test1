@@ -87,6 +87,7 @@ class Station:
 	var staff: Array[Staff]
 	var schedule: Array[ScheduleSlot]
 	var ads: Array[AdContract]
+	var transmission_stations: Array[String]
 
 	func _init() -> void:
 		cash = 50000
@@ -97,6 +98,7 @@ class Station:
 		staff = []
 		schedule = []
 		ads = []
+		transmission_stations = []
 
 	func total_payroll() -> int:
 		var total := 0

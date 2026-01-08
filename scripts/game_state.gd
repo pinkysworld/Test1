@@ -6,8 +6,11 @@ var day: int = 1
 var station := Models.Station.new()
 var competitors: Array[Models.Competitor] = []
 var content_offers: Array = []
+var transmission_offers: Array = []
 var difficulty: String = "Rookie"
 var save_path: String = "user://madtv_save.json"
+var betty_interest: int = 0
+var win_conditions: Array = []
 
 func _ready() -> void:
 	_load_data()
@@ -19,6 +22,8 @@ func _load_data() -> void:
 	station.staff = _load_staff()
 	competitors = _load_competitors()
 	content_offers = _load_content_offers()
+	transmission_offers = _load_transmission_offers()
+	win_conditions = _load_win_conditions()
 
 func _load_json(path: String) -> Array:
 	var file := FileAccess.open(path, FileAccess.READ)
@@ -58,6 +63,28 @@ func _load_competitors() -> Array[Models.Competitor]:
 func _load_content_offers() -> Array:
 	return _load_json("res://data/content_agency.json")
 
+func _load_transmission_offers() -> Array:
+	return _load_json("res://data/transmission_stations.json")
+
+func _load_win_conditions() -> Array:
+	return [
+		{
+			"id": "betty",
+			"title": "Win Betty's Heart",
+			"requirement": "Reach 0.7 reputation and 0.18 audience share.",
+		},
+		{
+			"id": "ratings",
+			"title": "Ratings Titan",
+			"requirement": "Reach 0.25 audience share.",
+		},
+		{
+			"id": "mogul",
+			"title": "Station Mogul",
+			"requirement": "Reach $150000 cash.",
+		},
+	]
+
 func _seed_schedule() -> void:
 	if station.library.is_empty():
 		return
@@ -87,7 +114,7 @@ func simulate_day() -> Dictionary:
 		var program := station.find_program(slot.program_id)
 		if program == null:
 			continue
-		var audience = (program.audience_score() + station.reputation * 0.2) * difficulty_mod.audience
+		var audience = (program.audience_score() + station.reputation * 0.2 + _station_signal_bonus()) * difficulty_mod.audience
 		var revenue = int(station.revenue_for_ads(slot.attached_ads) * difficulty_mod.revenue)
 		var cost = program.cost
 		results["slots"].append({
@@ -99,6 +126,8 @@ func simulate_day() -> Dictionary:
 		results["total_revenue"] += revenue
 		results["total_cost"] += cost
 	station.cash += results["total_revenue"] - results["total_cost"]
+	_process_competitor_ai()
+	_update_betty_interest(results["total_revenue"])
 	return results
 
 func end_of_day() -> Dictionary:
@@ -110,6 +139,52 @@ func end_of_day() -> Dictionary:
 		"cash": station.cash,
 		"day": day,
 	}
+
+func buy_transmission_station(station_id: String) -> bool:
+	for offer in transmission_offers:
+		if offer.id == station_id and not station.transmission_stations.has(station_id):
+			if station.cash < int(offer.cost):
+				return false
+			station.cash -= int(offer.cost)
+			station.transmission_stations.append(station_id)
+			return true
+	return false
+
+func _station_signal_bonus() -> float:
+	var bonus := 0.0
+	for offer in transmission_offers:
+		if station.transmission_stations.has(offer.id):
+			bonus += float(offer.audience_boost)
+	return bonus
+
+func _process_competitor_ai() -> void:
+	for rival in competitors:
+		var pick := rival.pick_program(station.library)
+		if pick == null:
+			continue
+		if rival.aggressiveness > 0.6 and pick.popularity > 0.7:
+			station.reputation = max(0.0, station.reputation - 0.01)
+			station.audience_share = max(0.05, station.audience_share - 0.005)
+		else:
+			station.reputation = min(1.0, station.reputation + 0.005)
+
+func _update_betty_interest(revenue: int) -> void:
+	if station.reputation >= 0.5:
+		betty_interest += 1
+	if revenue > 3000:
+		betty_interest += 1
+	if station.audience_share >= 0.18:
+		betty_interest += 1
+
+func check_win_conditions() -> Array:
+	var wins: Array = []
+	if station.reputation >= 0.7 and station.audience_share >= 0.18:
+		wins.append("betty")
+	if station.audience_share >= 0.25:
+		wins.append("ratings")
+	if station.cash >= 150000:
+		wins.append("mogul")
+	return wins
 
 func set_difficulty(value: String) -> void:
 	difficulty = value
@@ -127,11 +202,13 @@ func save_game() -> bool:
 	var data := {
 		"day": day,
 		"difficulty": difficulty,
+		"betty_interest": betty_interest,
 		"station": {
 			"cash": station.cash,
 			"debt": station.debt,
 			"reputation": station.reputation,
 			"audience_share": station.audience_share,
+			"transmission_stations": station.transmission_stations,
 		},
 		"schedule": [],
 	}
@@ -160,11 +237,13 @@ func load_game() -> bool:
 		return false
 	day = parsed.get("day", day)
 	difficulty = parsed.get("difficulty", difficulty)
+	betty_interest = parsed.get("betty_interest", betty_interest)
 	var station_data: Dictionary = parsed.get("station", {})
 	station.cash = station_data.get("cash", station.cash)
 	station.debt = station_data.get("debt", station.debt)
 	station.reputation = station_data.get("reputation", station.reputation)
 	station.audience_share = station_data.get("audience_share", station.audience_share)
+	station.transmission_stations = station_data.get("transmission_stations", [])
 	station.schedule = []
 	for slot_data in parsed.get("schedule", []):
 		station.schedule.append(Models.ScheduleSlot.new(slot_data))

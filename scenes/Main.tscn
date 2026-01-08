@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/textures/logo_madtv.svg" id="2"]
@@ -24,6 +24,8 @@
 [ext_resource type="Texture2D" path="res://assets/textures/prop_couch.svg" id="22"]
 [ext_resource type="Texture2D" path="res://assets/textures/prop_watcher1.svg" id="23"]
 [ext_resource type="Texture2D" path="res://assets/textures/prop_watcher2.svg" id="24"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_transmission.svg" id="25"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_betty.svg" id="26"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -203,6 +205,11 @@ text = "Content Agency"
 icon = ExtResource("18")
 icon_alignment = 1
 
+[node name="TransmissionButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Transmission Office"
+icon = ExtResource("25")
+icon_alignment = 1
+
 [node name="TalentButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Talent Agency"
 icon = ExtResource("19")
@@ -211,6 +218,11 @@ icon_alignment = 1
 [node name="StudioButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Studio Lot"
 icon = ExtResource("20")
+icon_alignment = 1
+
+[node name="BettyButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Betty's Lounge"
+icon = ExtResource("26")
 icon_alignment = 1
 
 [node name="PrButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
@@ -445,8 +457,10 @@ text = "Back to Hub"
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/AgencyButton" to="Main" method="_on_hub_button_pressed" binds=["agency"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/MarketButton" to="Main" method="_on_hub_button_pressed" binds=["market"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/ContentButton" to="Main" method="_on_hub_button_pressed" binds=["content"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/TransmissionButton" to="Main" method="_on_hub_button_pressed" binds=["transmission"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/TalentButton" to="Main" method="_on_hub_button_pressed" binds=["talent"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/StudioButton" to="Main" method="_on_hub_button_pressed" binds=["studio"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/BettyButton" to="Main" method="_on_hub_button_pressed" binds=["betty"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/PrButton" to="Main" method="_on_hub_button_pressed" binds=["pr"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/ArchiveButton" to="Main" method="_on_hub_button_pressed" binds=["archive"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/ResearchButton" to="Main" method="_on_hub_button_pressed" binds=["research"]]
