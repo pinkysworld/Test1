@@ -5,6 +5,8 @@ const Models = preload("res://scripts/models.gd")
 var day: int = 1
 var station := Models.Station.new()
 var competitors: Array[Models.Competitor] = []
+var difficulty: String = "Rookie"
+var save_path: String = "user://madtv_save.json"
 
 func _ready() -> void:
 	_load_data()
@@ -75,12 +77,13 @@ func simulate_day() -> Dictionary:
 		"total_revenue": 0,
 		"total_cost": 0,
 	}
+	var difficulty_mod := _difficulty_modifier()
 	for slot in station.schedule:
 		var program := station.find_program(slot.program_id)
 		if program == null:
 			continue
-		var audience = program.audience_score() + station.reputation * 0.2
-		var revenue = station.revenue_for_ads(slot.attached_ads)
+		var audience = (program.audience_score() + station.reputation * 0.2) * difficulty_mod.audience
+		var revenue = int(station.revenue_for_ads(slot.attached_ads) * difficulty_mod.revenue)
 		var cost = program.cost
 		results["slots"].append({
 			"program": program.title,
@@ -102,3 +105,62 @@ func end_of_day() -> Dictionary:
 		"cash": station.cash,
 		"day": day,
 	}
+
+func set_difficulty(value: String) -> void:
+	difficulty = value
+
+func _difficulty_modifier() -> Dictionary:
+	match difficulty:
+		"Primetime Pro":
+			return {"audience": 0.95, "revenue": 0.9}
+		"Ratings Monster":
+			return {"audience": 0.85, "revenue": 0.8}
+		_:
+			return {"audience": 1.0, "revenue": 1.0}
+
+func save_game() -> bool:
+	var data := {
+		"day": day,
+		"difficulty": difficulty,
+		"station": {
+			"cash": station.cash,
+			"debt": station.debt,
+			"reputation": station.reputation,
+			"audience_share": station.audience_share,
+		},
+		"schedule": [],
+	}
+	for slot in station.schedule:
+		data["schedule"].append({
+			"start_time": slot.start_time,
+			"end_time": slot.end_time,
+			"program_id": slot.program_id,
+			"attached_ads": slot.attached_ads,
+		})
+	var file := FileAccess.open(save_path, FileAccess.WRITE)
+	if file == null:
+		push_error("Unable to save game.")
+		return false
+	file.store_string(JSON.stringify(data, "\t"))
+	return true
+
+func load_game() -> bool:
+	if not FileAccess.file_exists(save_path):
+		return false
+	var file := FileAccess.open(save_path, FileAccess.READ)
+	if file == null:
+		return false
+	var parsed = JSON.parse_string(file.get_as_text())
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return false
+	day = parsed.get("day", day)
+	difficulty = parsed.get("difficulty", difficulty)
+	var station_data: Dictionary = parsed.get("station", {})
+	station.cash = station_data.get("cash", station.cash)
+	station.debt = station_data.get("debt", station.debt)
+	station.reputation = station_data.get("reputation", station.reputation)
+	station.audience_share = station_data.get("audience_share", station.audience_share)
+	station.schedule = []
+	for slot_data in parsed.get("schedule", []):
+		station.schedule.append(Models.ScheduleSlot.new(slot_data))
+	return true

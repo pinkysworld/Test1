@@ -11,6 +11,8 @@ var popularity: float
 var target_demo_tags: Array[String]
 var freshness: float
 var repeat_penalty: float
+var license_type: String
+var purchase_price: int
 
 func _init(data: Dictionary) -> void:
 	id = data.get("id", "")
@@ -22,6 +24,8 @@ func _init(data: Dictionary) -> void:
 	target_demo_tags = data.get("target_demo_tags", [])
 	freshness = data.get("freshness", 1.0)
 	repeat_penalty = data.get("repeat_penalty", 0.1)
+	license_type = data.get("license_type", "rent")
+	purchase_price = data.get("purchase_price", 0)
 
 func audience_score() -> float:
 	return popularity * freshness

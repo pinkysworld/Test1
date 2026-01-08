@@ -22,5 +22,21 @@
     "skill": 2,
     "wage": 380,
     "morale": 0.9
+  },
+  {
+    "id": "staff_research",
+    "name": "Nova Noggin",
+    "role": "researcher",
+    "skill": 3,
+    "wage": 420,
+    "morale": 0.82
+  },
+  {
+    "id": "staff_host",
+    "name": "Gus Giggles",
+    "role": "host",
+    "skill": 2,
+    "wage": 360,
+    "morale": 0.74
   }
 ]

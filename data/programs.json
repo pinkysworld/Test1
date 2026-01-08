@@ -8,7 +8,9 @@
     "popularity": 0.62,
     "target_demo_tags": ["adult", "comedy"],
     "freshness": 0.9,
-    "repeat_penalty": 0.1
+    "repeat_penalty": 0.1,
+    "license_type": "rent",
+    "purchase_price": 0
   },
   {
     "id": "show_fun_sitcom",
@@ -19,7 +21,9 @@
     "popularity": 0.74,
     "target_demo_tags": ["family", "comedy"],
     "freshness": 0.8,
-    "repeat_penalty": 0.15
+    "repeat_penalty": 0.15,
+    "license_type": "rent",
+    "purchase_price": 15000
   },
   {
     "id": "show_sun_movie",
@@ -30,6 +34,47 @@
     "popularity": 0.85,
     "target_demo_tags": ["teens", "action"],
     "freshness": 0.7,
-    "repeat_penalty": 0.2
+    "repeat_penalty": 0.2,
+    "license_type": "buy",
+    "purchase_price": 22000
+  },
+  {
+    "id": "show_midnight_horror",
+    "title": "Midnight Megabats",
+    "category": "movie",
+    "duration": 90,
+    "cost": 2800,
+    "popularity": 0.68,
+    "target_demo_tags": ["adult", "horror"],
+    "freshness": 0.75,
+    "repeat_penalty": 0.18,
+    "license_type": "rent",
+    "purchase_price": 12000
+  },
+  {
+    "id": "show_space_drama",
+    "title": "Orbiters: Galactic Desk",
+    "category": "series",
+    "duration": 60,
+    "cost": 1800,
+    "popularity": 0.71,
+    "target_demo_tags": ["teens", "sci-fi"],
+    "freshness": 0.83,
+    "repeat_penalty": 0.12,
+    "license_type": "buy",
+    "purchase_price": 18000
+  },
+  {
+    "id": "show_world_report",
+    "title": "World Report Live",
+    "category": "news",
+    "duration": 60,
+    "cost": 1300,
+    "popularity": 0.6,
+    "target_demo_tags": ["adult", "news"],
+    "freshness": 0.88,
+    "repeat_penalty": 0.1,
+    "license_type": "rent",
+    "purchase_price": 0
   }
 ]

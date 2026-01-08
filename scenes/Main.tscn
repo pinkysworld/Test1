@@ -1,10 +1,18 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/textures/logo_madtv.svg" id="2"]
 [ext_resource type="Texture2D" path="res://assets/textures/logo_funtv.svg" id="3"]
 [ext_resource type="Texture2D" path="res://assets/textures/logo_suntv.svg" id="4"]
 [ext_resource type="Texture2D" path="res://assets/textures/icon_programming.svg" id="5"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_staff.svg" id="6"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_ads.svg" id="7"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_news.svg" id="8"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_finance.svg" id="9"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_intel.svg" id="10"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_agency.svg" id="11"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_market.svg" id="12"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_menu.svg" id="13"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -27,7 +35,7 @@ anchor_right = 1.0
 offset_left = 24.0
 offset_top = 20.0
 offset_right = -24.0
-offset_bottom = 70.0
+offset_bottom = 80.0
 
 [node name="Title" type="Label" parent="TopBar"]
 text = "MadTV Village"
@@ -57,6 +65,22 @@ text = "Day 1"
 [node name="CashLabel" type="Label" parent="TopBar"]
 text = "Cash: $0"
 
+[node name="MenuButton" type="Button" parent="TopBar"]
+text = "Menu"
+icon = ExtResource("13")
+icon_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 2
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 90.0
+offset_right = -24.0
+offset_bottom = 120.0
+text = ""
+
 [node name="HubPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
@@ -64,7 +88,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = 90.0
+offset_top = 130.0
 offset_right = -40.0
 offset_bottom = -40.0
 
@@ -87,21 +111,43 @@ columns = 3
 
 [node name="StaffButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Staff Office"
+icon = ExtResource("6")
+icon_alignment = 1
 
 [node name="ProgrammingButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Programming Library"
+icon = ExtResource("5")
+icon_alignment = 1
 
 [node name="NewsButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "News Desk"
+icon = ExtResource("8")
+icon_alignment = 1
 
 [node name="AdsButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Ad Sales"
+icon = ExtResource("7")
+icon_alignment = 1
 
 [node name="FinanceButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Finance"
+icon = ExtResource("9")
+icon_alignment = 1
 
 [node name="IntelButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Competitor Intel"
+icon = ExtResource("10")
+icon_alignment = 1
+
+[node name="AgencyButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Ad Agency"
+icon = ExtResource("11")
+icon_alignment = 1
+
+[node name="MarketButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Movie Market"
+icon = ExtResource("12")
+icon_alignment = 1
 
 [node name="PlanButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
 text = "Plan Schedule"
@@ -120,7 +166,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = 90.0
+offset_top = 130.0
 offset_right = -40.0
 offset_bottom = -40.0
 
@@ -140,6 +186,83 @@ text = "Body"
 [node name="BackButton" type="Button" parent="ScreensPanel/ScreenContents"]
 text = "Back to Hub"
 
+[node name="MenuPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 340.0
+offset_top = 160.0
+offset_right = -340.0
+offset_bottom = -160.0
+
+[node name="MenuContents" type="VBoxContainer" parent="MenuPanel"]
+layout_mode = 2
+
+[node name="MenuTitle" type="Label" parent="MenuPanel/MenuContents"]
+text = "Station Menu"
+
+[node name="MenuConfig" type="Button" parent="MenuPanel/MenuContents"]
+text = "Configuration"
+
+[node name="MenuSave" type="Button" parent="MenuPanel/MenuContents"]
+text = "Save Game"
+
+[node name="MenuLoad" type="Button" parent="MenuPanel/MenuContents"]
+text = "Load Game"
+
+[node name="MenuBack" type="Button" parent="MenuPanel/MenuContents"]
+text = "Back to Hub"
+
+[node name="ConfigPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_top = 140.0
+offset_right = -300.0
+offset_bottom = -140.0
+
+[node name="ConfigContents" type="VBoxContainer" parent="ConfigPanel"]
+layout_mode = 2
+
+[node name="ConfigTitle" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Configuration"
+
+[node name="DifficultyLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Difficulty"
+
+[node name="DifficultySelect" type="OptionButton" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+
+[node name="MasterLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+min_value = -24.0
+max_value = 6.0
+step = 1.0
+value = -6.0
+
+[node name="SfxLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "SFX Volume"
+
+[node name="SfxSlider" type="HSlider" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+min_value = -24.0
+max_value = 6.0
+step = 1.0
+value = -3.0
+
+[node name="ConfigBack" type="Button" parent="ConfigPanel/ConfigContents"]
+text = "Back to Hub"
+
 [node name="SchedulePanel" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 3
@@ -147,7 +270,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = 90.0
+offset_top = 130.0
 offset_right = -40.0
 offset_bottom = -40.0
 
@@ -173,7 +296,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = 90.0
+offset_top = 130.0
 offset_right = -40.0
 offset_bottom = -40.0
 
@@ -199,7 +322,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 40.0
-offset_top = 90.0
+offset_top = 130.0
 offset_right = -40.0
 offset_bottom = -40.0
 
@@ -218,16 +341,27 @@ text = "Summary goes here."
 [node name="EndBack" type="Button" parent="EndPanel/EndContents"]
 text = "Back to Hub"
 
+[connection signal="pressed" from="TopBar/MenuButton" to="Main" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/StaffButton" to="Main" method="_on_hub_button_pressed" binds=["staff"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/ProgrammingButton" to="Main" method="_on_hub_button_pressed" binds=["programming"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/NewsButton" to="Main" method="_on_hub_button_pressed" binds=["news"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/AdsButton" to="Main" method="_on_hub_button_pressed" binds=["ads"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/FinanceButton" to="Main" method="_on_hub_button_pressed" binds=["finance"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/IntelButton" to="Main" method="_on_hub_button_pressed" binds=["intel"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/AgencyButton" to="Main" method="_on_hub_button_pressed" binds=["agency"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/MarketButton" to="Main" method="_on_hub_button_pressed" binds=["market"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/PlanButton" to="Main" method="_on_hub_button_pressed" binds=["plan"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/SimButton" to="Main" method="_on_hub_button_pressed" binds=["simulate"]]
 [connection signal="pressed" from="HubPanel/HubContents/HubButtons/EndButton" to="Main" method="_on_hub_button_pressed" binds=["end"]]
 [connection signal="pressed" from="ScreensPanel/ScreenContents/BackButton" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuConfig" to="Main" method="_on_menu_action" binds=["config"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuSave" to="Main" method="_on_menu_action" binds=["save"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuLoad" to="Main" method="_on_menu_action" binds=["load"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuBack" to="Main" method="_on_menu_action" binds=["back"]]
+[connection signal="pressed" from="ConfigPanel/ConfigContents/ConfigBack" to="Main" method="_on_menu_action" binds=["back"]]
+[connection signal="item_selected" from="ConfigPanel/ConfigContents/DifficultySelect" to="Main" method="_on_difficulty_selected"]
+[connection signal="value_changed" from="ConfigPanel/ConfigContents/MasterSlider" to="Main" method="_on_master_volume_changed"]
+[connection signal="value_changed" from="ConfigPanel/ConfigContents/SfxSlider" to="Main" method="_on_sfx_volume_changed"]
 [connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
 [connection signal="pressed" from="SimPanel/SimContents/SimBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
 [connection signal="pressed" from="EndPanel/EndContents/EndBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
