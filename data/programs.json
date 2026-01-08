@@ -1,0 +1,35 @@
+[
+  {
+    "id": "show_mad_news",
+    "title": "Mad News Express",
+    "category": "news",
+    "duration": 60,
+    "cost": 1200,
+    "popularity": 0.62,
+    "target_demo_tags": ["adult", "comedy"],
+    "freshness": 0.9,
+    "repeat_penalty": 0.1
+  },
+  {
+    "id": "show_fun_sitcom",
+    "title": "FunTV: The Couch Chronicles",
+    "category": "series",
+    "duration": 120,
+    "cost": 2500,
+    "popularity": 0.74,
+    "target_demo_tags": ["family", "comedy"],
+    "freshness": 0.8,
+    "repeat_penalty": 0.15
+  },
+  {
+    "id": "show_sun_movie",
+    "title": "SunTV Presents: Solar Knights",
+    "category": "movie",
+    "duration": 120,
+    "cost": 4000,
+    "popularity": 0.85,
+    "target_demo_tags": ["teens", "action"],
+    "freshness": 0.7,
+    "repeat_penalty": 0.2
+  }
+]

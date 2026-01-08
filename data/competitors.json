@@ -1,0 +1,14 @@
+[
+  {
+    "name": "MadTV",
+    "aggressiveness": 0.7
+  },
+  {
+    "name": "FunTV",
+    "aggressiveness": 0.5
+  },
+  {
+    "name": "SunTV",
+    "aggressiveness": 0.6
+  }
+]

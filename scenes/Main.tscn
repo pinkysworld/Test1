@@ -1,0 +1,233 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/logo_madtv.svg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/logo_funtv.svg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/logo_suntv.svg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_programming.svg" id="5"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.11, 0.12, 0.16, 1)
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = 70.0
+
+[node name="Title" type="Label" parent="TopBar"]
+text = "MadTV Village"
+
+[node name="LogoRow" type="HBoxContainer" parent="TopBar"]
+custom_minimum_size = Vector2(420, 0)
+size_flags_horizontal = 3
+
+[node name="LogoMad" type="TextureRect" parent="TopBar/LogoRow"]
+custom_minimum_size = Vector2(140, 60)
+texture = ExtResource("2")
+stretch_mode = 5
+
+[node name="LogoFun" type="TextureRect" parent="TopBar/LogoRow"]
+custom_minimum_size = Vector2(140, 60)
+texture = ExtResource("3")
+stretch_mode = 5
+
+[node name="LogoSun" type="TextureRect" parent="TopBar/LogoRow"]
+custom_minimum_size = Vector2(140, 60)
+texture = ExtResource("4")
+stretch_mode = 5
+
+[node name="DayLabel" type="Label" parent="TopBar"]
+text = "Day 1"
+
+[node name="CashLabel" type="Label" parent="TopBar"]
+text = "Cash: $0"
+
+[node name="HubPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 90.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="HubContents" type="VBoxContainer" parent="HubPanel"]
+layout_mode = 2
+
+[node name="HubTitle" type="Label" parent="HubPanel/HubContents"]
+text = "MadTV Village - Adventure Hub"
+
+[node name="HubDesc" type="Label" parent="HubPanel/HubContents"]
+text = "Click a location to manage your station. Difficulty: Rookie, Primetime Pro, Ratings Monster."
+
+[node name="HubIcon" type="TextureRect" parent="HubPanel/HubContents"]
+custom_minimum_size = Vector2(80, 80)
+texture = ExtResource("5")
+stretch_mode = 5
+
+[node name="HubButtons" type="GridContainer" parent="HubPanel/HubContents"]
+columns = 3
+
+[node name="StaffButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Staff Office"
+
+[node name="ProgrammingButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Programming Library"
+
+[node name="NewsButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "News Desk"
+
+[node name="AdsButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Ad Sales"
+
+[node name="FinanceButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Finance"
+
+[node name="IntelButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Competitor Intel"
+
+[node name="PlanButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Plan Schedule"
+
+[node name="SimButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Simulate Day"
+
+[node name="EndButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "End of Day"
+
+[node name="ScreensPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 90.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="ScreenContents" type="VBoxContainer" parent="ScreensPanel"]
+layout_mode = 2
+
+[node name="ScreenTitle" type="Label" parent="ScreensPanel/ScreenContents"]
+unique_name_in_owner = true
+text = "Screen"
+
+[node name="ScreenBody" type="RichTextLabel" parent="ScreensPanel/ScreenContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Body"
+
+[node name="BackButton" type="Button" parent="ScreensPanel/ScreenContents"]
+text = "Back to Hub"
+
+[node name="SchedulePanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 90.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="ScheduleContents" type="VBoxContainer" parent="SchedulePanel"]
+layout_mode = 2
+
+[node name="ScheduleTitle" type="Label" parent="SchedulePanel/ScheduleContents"]
+text = "Daily Schedule Builder"
+
+[node name="ScheduleBody" type="RichTextLabel" parent="SchedulePanel/ScheduleContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Schedule goes here."
+
+[node name="ScheduleBack" type="Button" parent="SchedulePanel/ScheduleContents"]
+text = "Back to Hub"
+
+[node name="SimPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 90.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="SimContents" type="VBoxContainer" parent="SimPanel"]
+layout_mode = 2
+
+[node name="SimTitle" type="Label" parent="SimPanel/SimContents"]
+text = "Simulation Results"
+
+[node name="SimBody" type="RichTextLabel" parent="SimPanel/SimContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Simulation results."
+
+[node name="SimBack" type="Button" parent="SimPanel/SimContents"]
+text = "Back to Hub"
+
+[node name="EndPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 90.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="EndContents" type="VBoxContainer" parent="EndPanel"]
+layout_mode = 2
+
+[node name="EndTitle" type="Label" parent="EndPanel/EndContents"]
+text = "End of Day Summary"
+
+[node name="EndBody" type="RichTextLabel" parent="EndPanel/EndContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Summary goes here."
+
+[node name="EndBack" type="Button" parent="EndPanel/EndContents"]
+text = "Back to Hub"
+
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/StaffButton" to="Main" method="_on_hub_button_pressed" binds=["staff"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ProgrammingButton" to="Main" method="_on_hub_button_pressed" binds=["programming"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/NewsButton" to="Main" method="_on_hub_button_pressed" binds=["news"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/AdsButton" to="Main" method="_on_hub_button_pressed" binds=["ads"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/FinanceButton" to="Main" method="_on_hub_button_pressed" binds=["finance"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/IntelButton" to="Main" method="_on_hub_button_pressed" binds=["intel"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/PlanButton" to="Main" method="_on_hub_button_pressed" binds=["plan"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/SimButton" to="Main" method="_on_hub_button_pressed" binds=["simulate"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/EndButton" to="Main" method="_on_hub_button_pressed" binds=["end"]]
+[connection signal="pressed" from="ScreensPanel/ScreenContents/BackButton" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="SimPanel/SimContents/SimBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="EndPanel/EndContents/EndBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ad_juice",
+    "advertiser_name": "Zap Juice",
+    "required_slots": 2,
+    "deadline_day": 3,
+    "payout": 3500,
+    "penalty": 800,
+    "target_demo": ["teens"],
+    "constraints": {
+      "time_windows": ["08-12"],
+      "genre_restrictions": ["series", "news"]
+    }
+  },
+  {
+    "id": "ad_tacos",
+    "advertiser_name": "Captain Taco",
+    "required_slots": 1,
+    "deadline_day": 2,
+    "payout": 1800,
+    "penalty": 400,
+    "target_demo": ["adult"],
+    "constraints": {
+      "time_windows": ["10-18"],
+      "genre_restrictions": ["movie", "series"]
+    }
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "staff_producer",
+    "name": "Lila Loud",
+    "role": "producer",
+    "skill": 3,
+    "wage": 450,
+    "morale": 0.8
+  },
+  {
+    "id": "staff_sales",
+    "name": "Dex Dealman",
+    "role": "sales",
+    "skill": 4,
+    "wage": 500,
+    "morale": 0.76
+  },
+  {
+    "id": "staff_pr",
+    "name": "Sunny Sparks",
+    "role": "PR",
+    "skill": 2,
+    "wage": 380,
+    "morale": 0.9
+  }
+]

@@ -1,0 +1,5 @@
+<svg width="256" height="128" viewBox="0 0 256 128" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="128" rx="24" fill="#3b82f6"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Comic Sans MS, Arial" font-size="48" fill="#fff">FunTV</text>
+  <path d="M40 90 C80 110, 176 110, 216 90" stroke="#fff" stroke-width="6" fill="none"/>
+</svg>
