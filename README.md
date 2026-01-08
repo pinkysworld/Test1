@@ -8,6 +8,7 @@ Cartoonish TV-station management prototype inspired by classic TV tycoon games. 
 - Data-driven programs (series/news/movies), ad contracts, staff, competitor profiles, and content agency offers.
 - Movie licensing includes rental and purchase pricing to support marketplace flows.
 - Save/load menu and difficulty settings with quick audio sliders (music + SFX).
+- Hub scene props include the classic TV, couch, and watchers for a Mad TV-inspired vibe.
 - Placeholder logos and location icons (SVG) to establish the playful tone.
 - Mouse-driven UI (point-and-click).
 

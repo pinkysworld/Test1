@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/textures/logo_madtv.svg" id="2"]
@@ -20,6 +20,10 @@
 [ext_resource type="Texture2D" path="res://assets/textures/icon_content_agency.svg" id="18"]
 [ext_resource type="Texture2D" path="res://assets/textures/icon_talent.svg" id="19"]
 [ext_resource type="Texture2D" path="res://assets/textures/icon_studio.svg" id="20"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_tv.svg" id="21"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_couch.svg" id="22"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_watcher1.svg" id="23"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_watcher2.svg" id="24"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -126,6 +130,29 @@ text = "Click a location to manage your station. Difficulty: Rookie, Primetime P
 [node name="HubIcon" type="TextureRect" parent="HubPanel/HubContents"]
 custom_minimum_size = Vector2(80, 80)
 texture = ExtResource("5")
+stretch_mode = 5
+
+[node name="HubScene" type="HBoxContainer" parent="HubPanel/HubContents"]
+custom_minimum_size = Vector2(0, 120)
+
+[node name="WatcherLeft" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(80, 120)
+texture = ExtResource("23")
+stretch_mode = 5
+
+[node name="Couch" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(200, 120)
+texture = ExtResource("22")
+stretch_mode = 5
+
+[node name="WatcherRight" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(80, 120)
+texture = ExtResource("24")
+stretch_mode = 5
+
+[node name="Television" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(160, 120)
+texture = ExtResource("21")
 stretch_mode = 5
 
 [node name="HubButtons" type="GridContainer" parent="HubPanel/HubContents"]
