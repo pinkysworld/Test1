@@ -151,6 +151,7 @@ func end_of_day() -> Dictionary:
 	station.cash -= payroll
 	day += 1
 	_recover_freshness()
+	_refresh_ad_offers()
 	return {
 		"payroll": payroll,
 		"cash": station.cash,
@@ -217,6 +218,23 @@ func accept_best_ad_offer() -> String:
 	station.ads.append(offer)
 	return "Signed premium ad with %s." % offer.advertiser_name
 
+func buy_next_content_offer() -> String:
+	if content_offers.is_empty():
+		return "No content offers available."
+	var offer = content_offers.pop_front()
+	return _purchase_content_offer(offer)
+
+func buy_best_content_offer() -> String:
+	if content_offers.is_empty():
+		return "No content offers available."
+	var best_index := 0
+	for i in range(content_offers.size()):
+		if float(content_offers[i].popularity) > float(content_offers[best_index].popularity):
+			best_index = i
+	var offer = content_offers[best_index]
+	content_offers.remove_at(best_index)
+	return _purchase_content_offer(offer)
+
 func auto_plan_day() -> void:
 	var sorted_programs = station.library.duplicate()
 	sorted_programs.sort_custom(func(a, b): return a.popularity > b.popularity)
@@ -261,6 +279,44 @@ func _recover_freshness() -> void:
 	for program in station.library:
 		if program.last_aired_day < day:
 			program.freshness = min(1.0, program.freshness + 0.05)
+
+func _purchase_content_offer(offer: Dictionary) -> String:
+	var price = int(offer.price)
+	if station.cash < price:
+		return "Not enough cash for %s." % offer.title
+	station.cash -= price
+	var program_id = "offer_%s_%d" % [offer.title.to_lower().replace(" ", "_"), day]
+	var new_program = Models.Program.new({
+		"id": program_id,
+		"title": offer.title,
+		"category": offer.category,
+		"duration": offer.duration,
+		"cost": int(price * 0.05),
+		"popularity": offer.popularity,
+		"target_demo_tags": [offer.category],
+		"freshness": 1.0,
+		"repeat_penalty": 0.12,
+		"license_type": offer.license_type,
+		"purchase_price": price,
+	})
+	station.library.append(new_program)
+	return "Signed %s from Content Agency." % offer.title
+
+func _refresh_ad_offers() -> void:
+	var unused = _unused_ads_pool()
+	if unused.is_empty():
+		return
+	ad_offers.append(unused[0])
+
+func _unused_ads_pool() -> Array[Models.AdContract]:
+	var unused: Array[Models.AdContract] = []
+	for ad in all_ads:
+		if station.ads.has(ad):
+			continue
+		if ad_offers.has(ad):
+			continue
+		unused.append(ad)
+	return unused
 
 func _process_competitor_ai() -> void:
 	competitor_reports = []

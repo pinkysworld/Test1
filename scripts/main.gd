@@ -248,6 +248,14 @@ func _on_screen_action(action: String) -> void:
 				message = game_state.buy_best_transmission_station()
 			_update_status(message)
 			_show_screen("Transmission Office", _transmission_body(), "transmission")
+		"content":
+			var message := ""
+			if action == "primary":
+				message = game_state.buy_best_content_offer()
+			else:
+				message = game_state.buy_next_content_offer()
+			_update_status(message)
+			_show_screen("Content Agency", _content_body(), "content")
 		"betty":
 			_update_status("Betty is impressed by your dedication!")
 			_show_screen("Betty's Lounge", _betty_body(), "betty")
@@ -273,6 +281,12 @@ func _configure_screen_actions() -> void:
 			secondary_action_button.visible = true
 			primary_action_button.text = "Buy Next Tower"
 			secondary_action_button.text = "Buy Best Boost"
+		"content":
+			action_row.visible = true
+			primary_action_button.visible = true
+			secondary_action_button.visible = true
+			primary_action_button.text = "Buy Best Show"
+			secondary_action_button.text = "Buy Next Offer"
 		"betty":
 			action_row.visible = true
 			primary_action_button.visible = true
@@ -365,6 +379,8 @@ func _content_body() -> String:
 	var lines: Array[String] = ["Content Agency offers fresh packages for rent or sale:"]
 	for offer in game_state.content_offers:
 		lines.append("%s [%s] | %s $%d | Pop %.2f" % [offer.title, offer.category, offer.license_type, offer.price, offer.popularity])
+	if game_state.content_offers.is_empty():
+		lines.append("No offers available today.")
 	return "\n".join(lines)
 
 func _transmission_body() -> String:
