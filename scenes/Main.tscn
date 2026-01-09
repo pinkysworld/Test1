@@ -1,0 +1,507 @@
+[gd_scene load_steps=26 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/logo_madtv.svg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/textures/logo_funtv.svg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/textures/logo_suntv.svg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_programming.svg" id="5"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_staff.svg" id="6"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_ads.svg" id="7"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_news.svg" id="8"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_finance.svg" id="9"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_intel.svg" id="10"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_agency.svg" id="11"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_market.svg" id="12"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_menu.svg" id="13"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_pr.svg" id="14"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_archive.svg" id="15"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_research.svg" id="16"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_lounge.svg" id="17"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_content_agency.svg" id="18"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_talent.svg" id="19"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_studio.svg" id="20"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_tv.svg" id="21"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_couch.svg" id="22"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_watcher1.svg" id="23"]
+[ext_resource type="Texture2D" path="res://assets/textures/prop_watcher2.svg" id="24"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_transmission.svg" id="25"]
+[ext_resource type="Texture2D" path="res://assets/textures/icon_betty.svg" id="26"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.11, 0.12, 0.16, 1)
+
+[node name="GlowLeft" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 0.5
+anchor_bottom = 1.0
+color = Color(0.18, 0.08, 0.32, 0.25)
+
+[node name="GlowRight" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.06, 0.2, 0.3, 0.25)
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = 80.0
+
+[node name="Title" type="Label" parent="TopBar"]
+text = "MadTV Village"
+
+[node name="LogoRow" type="HBoxContainer" parent="TopBar"]
+custom_minimum_size = Vector2(420, 0)
+size_flags_horizontal = 3
+
+[node name="LogoMad" type="TextureRect" parent="TopBar/LogoRow"]
+custom_minimum_size = Vector2(140, 60)
+texture = ExtResource("2")
+stretch_mode = 5
+
+[node name="LogoFun" type="TextureRect" parent="TopBar/LogoRow"]
+custom_minimum_size = Vector2(140, 60)
+texture = ExtResource("3")
+stretch_mode = 5
+
+[node name="LogoSun" type="TextureRect" parent="TopBar/LogoRow"]
+custom_minimum_size = Vector2(140, 60)
+texture = ExtResource("4")
+stretch_mode = 5
+
+[node name="DayLabel" type="Label" parent="TopBar"]
+text = "Day 1"
+
+[node name="CashLabel" type="Label" parent="TopBar"]
+text = "Cash: $0"
+
+[node name="MenuButton" type="Button" parent="TopBar"]
+text = "Menu"
+icon = ExtResource("13")
+icon_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 2
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 90.0
+offset_right = -24.0
+offset_bottom = 120.0
+text = ""
+
+[node name="HubPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 130.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="HubContents" type="VBoxContainer" parent="HubPanel"]
+layout_mode = 2
+
+[node name="HubTitle" type="Label" parent="HubPanel/HubContents"]
+text = "MadTV Village - Adventure Hub"
+
+[node name="HubDesc" type="Label" parent="HubPanel/HubContents"]
+text = "Click a location to manage your station. Difficulty: Rookie, Primetime Pro, Ratings Monster."
+
+[node name="HubIcon" type="TextureRect" parent="HubPanel/HubContents"]
+custom_minimum_size = Vector2(80, 80)
+texture = ExtResource("5")
+stretch_mode = 5
+
+[node name="HubScene" type="HBoxContainer" parent="HubPanel/HubContents"]
+custom_minimum_size = Vector2(0, 120)
+
+[node name="WatcherLeft" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(80, 120)
+texture = ExtResource("23")
+stretch_mode = 5
+
+[node name="Couch" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(200, 120)
+texture = ExtResource("22")
+stretch_mode = 5
+
+[node name="WatcherRight" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(80, 120)
+texture = ExtResource("24")
+stretch_mode = 5
+
+[node name="Television" type="TextureRect" parent="HubPanel/HubContents/HubScene"]
+custom_minimum_size = Vector2(160, 120)
+texture = ExtResource("21")
+stretch_mode = 5
+
+[node name="HubButtons" type="GridContainer" parent="HubPanel/HubContents"]
+columns = 3
+
+[node name="StaffButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Staff Office"
+icon = ExtResource("6")
+icon_alignment = 1
+
+[node name="ProgrammingButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Programming Library"
+icon = ExtResource("5")
+icon_alignment = 1
+
+[node name="NewsButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "News Desk"
+icon = ExtResource("8")
+icon_alignment = 1
+
+[node name="AdsButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Ad Sales"
+icon = ExtResource("7")
+icon_alignment = 1
+
+[node name="FinanceButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Finance"
+icon = ExtResource("9")
+icon_alignment = 1
+
+[node name="IntelButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Competitor Intel"
+icon = ExtResource("10")
+icon_alignment = 1
+
+[node name="AgencyButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Advertisement Agency"
+icon = ExtResource("11")
+icon_alignment = 1
+
+[node name="MarketButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Movie Market"
+icon = ExtResource("12")
+icon_alignment = 1
+
+[node name="ContentButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Content Agency"
+icon = ExtResource("18")
+icon_alignment = 1
+
+[node name="TransmissionButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Transmission Office"
+icon = ExtResource("25")
+icon_alignment = 1
+
+[node name="TalentButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Talent Agency"
+icon = ExtResource("19")
+icon_alignment = 1
+
+[node name="StudioButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Studio Lot"
+icon = ExtResource("20")
+icon_alignment = 1
+
+[node name="BettyButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Betty's Lounge"
+icon = ExtResource("26")
+icon_alignment = 1
+
+[node name="PrButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "PR Studio"
+icon = ExtResource("14")
+icon_alignment = 1
+
+[node name="ArchiveButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Archive Vault"
+icon = ExtResource("15")
+icon_alignment = 1
+
+[node name="ResearchButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Research Lab"
+icon = ExtResource("16")
+icon_alignment = 1
+
+[node name="LoungeButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Staff Lounge"
+icon = ExtResource("17")
+icon_alignment = 1
+
+[node name="PlanButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Plan Schedule"
+
+[node name="SimButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "Simulate Day"
+
+[node name="EndButton" type="Button" parent="HubPanel/HubContents/HubButtons"]
+text = "End of Day"
+
+[node name="ScreensPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 130.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="ScreenContents" type="VBoxContainer" parent="ScreensPanel"]
+layout_mode = 2
+
+[node name="ScreenTitle" type="Label" parent="ScreensPanel/ScreenContents"]
+unique_name_in_owner = true
+text = "Screen"
+
+[node name="ScreenBody" type="RichTextLabel" parent="ScreensPanel/ScreenContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Body"
+
+[node name="ActionRow" type="HBoxContainer" parent="ScreensPanel/ScreenContents"]
+unique_name_in_owner = true
+visible = false
+
+[node name="PrimaryActionButton" type="Button" parent="ScreensPanel/ScreenContents/ActionRow"]
+unique_name_in_owner = true
+text = "Primary Action"
+
+[node name="SecondaryActionButton" type="Button" parent="ScreensPanel/ScreenContents/ActionRow"]
+unique_name_in_owner = true
+text = "Secondary Action"
+
+[node name="BackButton" type="Button" parent="ScreensPanel/ScreenContents"]
+text = "Back to Hub"
+
+[node name="MenuPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 340.0
+offset_top = 160.0
+offset_right = -340.0
+offset_bottom = -160.0
+
+[node name="MenuContents" type="VBoxContainer" parent="MenuPanel"]
+layout_mode = 2
+
+[node name="MenuTitle" type="Label" parent="MenuPanel/MenuContents"]
+text = "Station Menu"
+
+[node name="MenuConfig" type="Button" parent="MenuPanel/MenuContents"]
+text = "Configuration"
+
+[node name="MenuSave" type="Button" parent="MenuPanel/MenuContents"]
+text = "Save Game"
+
+[node name="MenuLoad" type="Button" parent="MenuPanel/MenuContents"]
+text = "Load Game"
+
+[node name="MenuBack" type="Button" parent="MenuPanel/MenuContents"]
+text = "Back to Hub"
+
+[node name="ConfigPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_top = 140.0
+offset_right = -300.0
+offset_bottom = -140.0
+
+[node name="ConfigContents" type="VBoxContainer" parent="ConfigPanel"]
+layout_mode = 2
+
+[node name="ConfigTitle" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Configuration"
+
+[node name="DifficultyLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Difficulty"
+
+[node name="DifficultySelect" type="OptionButton" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+
+[node name="MasterLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+min_value = -24.0
+max_value = 6.0
+step = 1.0
+value = -10.0
+
+[node name="SfxLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "SFX Volume"
+
+[node name="SfxSlider" type="HSlider" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+min_value = -24.0
+max_value = 6.0
+step = 1.0
+value = -6.0
+
+[node name="MusicLabel" type="Label" parent="ConfigPanel/ConfigContents"]
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="ConfigPanel/ConfigContents"]
+unique_name_in_owner = true
+min_value = -24.0
+max_value = 6.0
+step = 1.0
+value = -14.0
+
+[node name="ConfigBack" type="Button" parent="ConfigPanel/ConfigContents"]
+text = "Back to Hub"
+
+[node name="SchedulePanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 130.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="ScheduleContents" type="VBoxContainer" parent="SchedulePanel"]
+layout_mode = 2
+
+[node name="ScheduleTitle" type="Label" parent="SchedulePanel/ScheduleContents"]
+text = "Daily Schedule Builder"
+
+[node name="ScheduleBody" type="RichTextLabel" parent="SchedulePanel/ScheduleContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Schedule goes here."
+
+[node name="ScheduleActions" type="HBoxContainer" parent="SchedulePanel/ScheduleContents"]
+
+[node name="AutoPlanButton" type="Button" parent="SchedulePanel/ScheduleContents/ScheduleActions"]
+text = "Auto Plan Day"
+
+[node name="ClearScheduleButton" type="Button" parent="SchedulePanel/ScheduleContents/ScheduleActions"]
+text = "Clear Schedule"
+
+[node name="ScheduleBack" type="Button" parent="SchedulePanel/ScheduleContents"]
+text = "Back to Hub"
+
+[node name="SimPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 130.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="SimContents" type="VBoxContainer" parent="SimPanel"]
+layout_mode = 2
+
+[node name="SimTitle" type="Label" parent="SimPanel/SimContents"]
+text = "Simulation Results"
+
+[node name="SimBody" type="RichTextLabel" parent="SimPanel/SimContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Simulation results."
+
+[node name="SimBack" type="Button" parent="SimPanel/SimContents"]
+text = "Back to Hub"
+
+[node name="EndPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 130.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="EndContents" type="VBoxContainer" parent="EndPanel"]
+layout_mode = 2
+
+[node name="EndTitle" type="Label" parent="EndPanel/EndContents"]
+text = "End of Day Summary"
+
+[node name="EndBody" type="RichTextLabel" parent="EndPanel/EndContents"]
+unique_name_in_owner = true
+fit_content = true
+scroll_active = false
+text = "Summary goes here."
+
+[node name="EndBack" type="Button" parent="EndPanel/EndContents"]
+text = "Back to Hub"
+
+[connection signal="pressed" from="TopBar/MenuButton" to="Main" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/StaffButton" to="Main" method="_on_hub_button_pressed" binds=["staff"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ProgrammingButton" to="Main" method="_on_hub_button_pressed" binds=["programming"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/NewsButton" to="Main" method="_on_hub_button_pressed" binds=["news"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/AdsButton" to="Main" method="_on_hub_button_pressed" binds=["ads"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/FinanceButton" to="Main" method="_on_hub_button_pressed" binds=["finance"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/IntelButton" to="Main" method="_on_hub_button_pressed" binds=["intel"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/AgencyButton" to="Main" method="_on_hub_button_pressed" binds=["agency"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/MarketButton" to="Main" method="_on_hub_button_pressed" binds=["market"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ContentButton" to="Main" method="_on_hub_button_pressed" binds=["content"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/TransmissionButton" to="Main" method="_on_hub_button_pressed" binds=["transmission"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/TalentButton" to="Main" method="_on_hub_button_pressed" binds=["talent"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/StudioButton" to="Main" method="_on_hub_button_pressed" binds=["studio"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/BettyButton" to="Main" method="_on_hub_button_pressed" binds=["betty"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/PrButton" to="Main" method="_on_hub_button_pressed" binds=["pr"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ArchiveButton" to="Main" method="_on_hub_button_pressed" binds=["archive"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/ResearchButton" to="Main" method="_on_hub_button_pressed" binds=["research"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/LoungeButton" to="Main" method="_on_hub_button_pressed" binds=["lounge"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/PlanButton" to="Main" method="_on_hub_button_pressed" binds=["plan"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/SimButton" to="Main" method="_on_hub_button_pressed" binds=["simulate"]]
+[connection signal="pressed" from="HubPanel/HubContents/HubButtons/EndButton" to="Main" method="_on_hub_button_pressed" binds=["end"]]
+[connection signal="pressed" from="ScreensPanel/ScreenContents/BackButton" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="ScreensPanel/ScreenContents/ActionRow/PrimaryActionButton" to="Main" method="_on_screen_action" binds=["primary"]]
+[connection signal="pressed" from="ScreensPanel/ScreenContents/ActionRow/SecondaryActionButton" to="Main" method="_on_screen_action" binds=["secondary"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuConfig" to="Main" method="_on_menu_action" binds=["config"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuSave" to="Main" method="_on_menu_action" binds=["save"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuLoad" to="Main" method="_on_menu_action" binds=["load"]]
+[connection signal="pressed" from="MenuPanel/MenuContents/MenuBack" to="Main" method="_on_menu_action" binds=["back"]]
+[connection signal="pressed" from="ConfigPanel/ConfigContents/ConfigBack" to="Main" method="_on_menu_action" binds=["back"]]
+[connection signal="item_selected" from="ConfigPanel/ConfigContents/DifficultySelect" to="Main" method="_on_difficulty_selected"]
+[connection signal="value_changed" from="ConfigPanel/ConfigContents/MasterSlider" to="Main" method="_on_master_volume_changed"]
+[connection signal="value_changed" from="ConfigPanel/ConfigContents/SfxSlider" to="Main" method="_on_sfx_volume_changed"]
+[connection signal="value_changed" from="ConfigPanel/ConfigContents/MusicSlider" to="Main" method="_on_music_volume_changed"]
+[connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleActions/AutoPlanButton" to="Main" method="_on_schedule_action" binds=["auto"]]
+[connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleActions/ClearScheduleButton" to="Main" method="_on_schedule_action" binds=["clear"]]
+[connection signal="pressed" from="SimPanel/SimContents/SimBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
+[connection signal="pressed" from="EndPanel/EndContents/EndBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
