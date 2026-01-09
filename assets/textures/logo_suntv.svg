@@ -1,0 +1,6 @@
+<svg width="256" height="128" viewBox="0 0 256 128" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="128" rx="24" fill="#f59e0b"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Comic Sans MS, Arial" font-size="48" fill="#1f2937">SunTV</text>
+  <circle cx="40" cy="40" r="14" fill="#fff4b5"/>
+  <circle cx="216" cy="40" r="14" fill="#fff4b5"/>
+</svg>

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "ad_juice",
+    "advertiser_name": "Zap Juice",
+    "required_slots": 2,
+    "deadline_day": 3,
+    "payout": 3500,
+    "penalty": 800,
+    "target_demo": ["teens"],
+    "constraints": {
+      "time_windows": ["08-12"],
+      "genre_restrictions": ["series", "news"]
+    }
+  },
+  {
+    "id": "ad_tacos",
+    "advertiser_name": "Captain Taco",
+    "required_slots": 1,
+    "deadline_day": 2,
+    "payout": 1800,
+    "penalty": 400,
+    "target_demo": ["adult"],
+    "constraints": {
+      "time_windows": ["10-18"],
+      "genre_restrictions": ["movie", "series"]
+    }
+  },
+  {
+    "id": "ad_mattress",
+    "advertiser_name": "Cloudy Mattress Co.",
+    "required_slots": 3,
+    "deadline_day": 4,
+    "payout": 5000,
+    "penalty": 1200,
+    "target_demo": ["adult", "family"],
+    "constraints": {
+      "time_windows": ["18-23"],
+      "genre_restrictions": ["series", "movie"]
+    }
+  },
+  {
+    "id": "ad_petfood",
+    "advertiser_name": "Cosmo Kibble",
+    "required_slots": 2,
+    "deadline_day": 3,
+    "payout": 2600,
+    "penalty": 600,
+    "target_demo": ["family"],
+    "constraints": {
+      "time_windows": ["06-12"],
+      "genre_restrictions": ["news", "series"]
+    }
+  },
+  {
+    "id": "ad_arcade",
+    "advertiser_name": "Pixel Arcade",
+    "required_slots": 2,
+    "deadline_day": 5,
+    "payout": 4200,
+    "penalty": 900,
+    "target_demo": ["teens", "gaming"],
+    "constraints": {
+      "time_windows": ["16-22"],
+      "genre_restrictions": ["series", "movie"]
+    }
+  },
+  {
+    "id": "ad_travel",
+    "advertiser_name": "SkyHop Travel",
+    "required_slots": 1,
+    "deadline_day": 3,
+    "payout": 2100,
+    "penalty": 500,
+    "target_demo": ["adult"],
+    "constraints": {
+      "time_windows": ["12-18"],
+      "genre_restrictions": ["news", "series"]
+    }
+  },
+  {
+    "id": "ad_sneakers",
+    "advertiser_name": "Thunder Kicks",
+    "required_slots": 2,
+    "deadline_day": 4,
+    "payout": 3000,
+    "penalty": 700,
+    "target_demo": ["teens", "sports"],
+    "constraints": {
+      "time_windows": ["14-20"],
+      "genre_restrictions": ["series", "movie"]
+    }
+  },
+  {
+    "id": "ad_bank",
+    "advertiser_name": "Union Metro Bank",
+    "required_slots": 1,
+    "deadline_day": 6,
+    "payout": 2600,
+    "penalty": 800,
+    "target_demo": ["adult"],
+    "constraints": {
+      "time_windows": ["06-10"],
+      "genre_restrictions": ["news"]
+    }
+  },
+  {
+    "id": "ad_soda",
+    "advertiser_name": "Fizz Pop",
+    "required_slots": 3,
+    "deadline_day": 5,
+    "payout": 5200,
+    "penalty": 1100,
+    "target_demo": ["family", "teens"],
+    "constraints": {
+      "time_windows": ["12-20"],
+      "genre_restrictions": ["series", "movie"]
+    }
+  },
+  {
+    "id": "ad_gadgets",
+    "advertiser_name": "Nova Gadgets",
+    "required_slots": 1,
+    "deadline_day": 4,
+    "payout": 2400,
+    "penalty": 600,
+    "target_demo": ["adult", "tech"],
+    "constraints": {
+      "time_windows": ["20-23"],
+      "genre_restrictions": ["news", "series"]
+    }
+  }
+]
