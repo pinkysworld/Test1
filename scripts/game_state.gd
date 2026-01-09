@@ -7,8 +7,6 @@ var station := Models.Station.new()
 var competitors: Array[Models.Competitor] = []
 var content_offers: Array = []
 var transmission_offers: Array = []
-var all_ads: Array[Models.AdContract] = []
-var ad_offers: Array[Models.AdContract] = []
 var difficulty: String = "Rookie"
 var save_path: String = "user://madtv_save.json"
 var betty_interest: int = 0
@@ -21,14 +19,7 @@ func _ready() -> void:
 
 func _load_data() -> void:
 	station.library = _load_programs()
-	all_ads = _load_ads()
-	station.ads = []
-	ad_offers = []
-	for i in range(all_ads.size()):
-		if i < 3:
-			station.ads.append(all_ads[i])
-		else:
-			ad_offers.append(all_ads[i])
+	station.ads = _load_ads()
 	station.staff = _load_staff()
 	competitors = _load_competitors()
 	content_offers = _load_content_offers()
@@ -120,16 +111,13 @@ func simulate_day() -> Dictionary:
 		"total_cost": 0,
 	}
 	var difficulty_mod := _difficulty_modifier()
-	var total_audience := 0.0
 	for slot in station.schedule:
 		var program := station.find_program(slot.program_id)
 		if program == null:
 			continue
-		_apply_program_fatigue(program)
 		var audience = (program.audience_score() + station.reputation * 0.2 + _station_signal_bonus()) * difficulty_mod.audience
 		var revenue = int(station.revenue_for_ads(slot.attached_ads) * difficulty_mod.revenue)
 		var cost = program.cost
-		total_audience += audience
 		results["slots"].append({
 			"program": program.title,
 			"audience": audience,
@@ -139,9 +127,6 @@ func simulate_day() -> Dictionary:
 		results["total_revenue"] += revenue
 		results["total_cost"] += cost
 	station.cash += results["total_revenue"] - results["total_cost"]
-	if results["slots"].size() > 0:
-		var average_audience = total_audience / results["slots"].size()
-		station.audience_share = clamp(station.audience_share + (average_audience - 0.6) * 0.02, 0.05, 0.5)
 	_process_competitor_ai()
 	_update_betty_interest(results["total_revenue"])
 	return results
@@ -150,21 +135,11 @@ func end_of_day() -> Dictionary:
 	var payroll := station.total_payroll()
 	station.cash -= payroll
 	day += 1
-	_recover_freshness()
-	_refresh_ad_offers()
 	return {
 		"payroll": payroll,
 		"cash": station.cash,
 		"day": day,
 	}
-
-func refresh_news() -> int:
-	var boosted := 0
-	for program in station.library:
-		if program.category == "news":
-			program.freshness = min(1.0, program.freshness + 0.2)
-			boosted += 1
-	return boosted
 
 func buy_transmission_station(station_id: String) -> bool:
 	for offer in transmission_offers:
@@ -199,124 +174,12 @@ func buy_best_transmission_station() -> String:
 		return "Not enough cash for %s." % offer.name
 	return "All transmission stations acquired."
 
-func accept_next_ad_offer() -> String:
-	if ad_offers.is_empty():
-		return "No ad offers available."
-	var offer = ad_offers.pop_front()
-	station.ads.append(offer)
-	return "Signed ad contract with %s." % offer.advertiser_name
-
-func accept_best_ad_offer() -> String:
-	if ad_offers.is_empty():
-		return "No ad offers available."
-	var best_index := 0
-	for i in range(ad_offers.size()):
-		if ad_offers[i].payout > ad_offers[best_index].payout:
-			best_index = i
-	var offer = ad_offers[best_index]
-	ad_offers.remove_at(best_index)
-	station.ads.append(offer)
-	return "Signed premium ad with %s." % offer.advertiser_name
-
-func buy_next_content_offer() -> String:
-	if content_offers.is_empty():
-		return "No content offers available."
-	var offer = content_offers.pop_front()
-	return _purchase_content_offer(offer)
-
-func buy_best_content_offer() -> String:
-	if content_offers.is_empty():
-		return "No content offers available."
-	var best_index := 0
-	for i in range(content_offers.size()):
-		if float(content_offers[i].popularity) > float(content_offers[best_index].popularity):
-			best_index = i
-	var offer = content_offers[best_index]
-	content_offers.remove_at(best_index)
-	return _purchase_content_offer(offer)
-
-func auto_plan_day() -> void:
-	var sorted_programs = station.library.duplicate()
-	sorted_programs.sort_custom(func(a, b): return a.popularity > b.popularity)
-	var sorted_ads = station.ads.duplicate()
-	sorted_ads.sort_custom(func(a, b): return a.payout > b.payout)
-	station.schedule = []
-	var start_time := 8
-	var slot_length := 2
-	for i in range(6):
-		if sorted_programs.is_empty():
-			break
-		var program = sorted_programs[i % sorted_programs.size()]
-		var ads: Array[String] = []
-		if not sorted_ads.is_empty():
-			ads.append(sorted_ads[i % sorted_ads.size()].id)
-		station.schedule.append(Models.ScheduleSlot.new({
-			"start_time": start_time,
-			"end_time": start_time + slot_length,
-			"program_id": program.id,
-			"attached_ads": ads,
-		}))
-		start_time += slot_length
-
-func clear_schedule() -> void:
-	station.schedule = []
-
 func _station_signal_bonus() -> float:
 	var bonus := 0.0
 	for offer in transmission_offers:
 		if station.transmission_stations.has(offer.id):
 			bonus += float(offer.audience_boost)
 	return bonus
-
-func _apply_program_fatigue(program: Models.Program) -> void:
-	if program.last_aired_day == day:
-		program.freshness = max(0.3, program.freshness - program.repeat_penalty)
-	else:
-		program.freshness = max(0.4, program.freshness - 0.05)
-	program.last_aired_day = day
-
-func _recover_freshness() -> void:
-	for program in station.library:
-		if program.last_aired_day < day:
-			program.freshness = min(1.0, program.freshness + 0.05)
-
-func _purchase_content_offer(offer: Dictionary) -> String:
-	var price = int(offer.price)
-	if station.cash < price:
-		return "Not enough cash for %s." % offer.title
-	station.cash -= price
-	var program_id = "offer_%s_%d" % [offer.title.to_lower().replace(" ", "_"), day]
-	var new_program = Models.Program.new({
-		"id": program_id,
-		"title": offer.title,
-		"category": offer.category,
-		"duration": offer.duration,
-		"cost": int(price * 0.05),
-		"popularity": offer.popularity,
-		"target_demo_tags": [offer.category],
-		"freshness": 1.0,
-		"repeat_penalty": 0.12,
-		"license_type": offer.license_type,
-		"purchase_price": price,
-	})
-	station.library.append(new_program)
-	return "Signed %s from Content Agency." % offer.title
-
-func _refresh_ad_offers() -> void:
-	var unused = _unused_ads_pool()
-	if unused.is_empty():
-		return
-	ad_offers.append(unused[0])
-
-func _unused_ads_pool() -> Array[Models.AdContract]:
-	var unused: Array[Models.AdContract] = []
-	for ad in all_ads:
-		if station.ads.has(ad):
-			continue
-		if ad_offers.has(ad):
-			continue
-		unused.append(ad)
-	return unused
 
 func _process_competitor_ai() -> void:
 	competitor_reports = []
@@ -377,8 +240,6 @@ func save_game() -> bool:
 		"day": day,
 		"difficulty": difficulty,
 		"betty_interest": betty_interest,
-		"active_ads": [],
-		"ad_offers": [],
 		"station": {
 			"cash": station.cash,
 			"debt": station.debt,
@@ -388,10 +249,6 @@ func save_game() -> bool:
 		},
 		"schedule": [],
 	}
-	for ad in station.ads:
-		data["active_ads"].append(ad.id)
-	for offer in ad_offers:
-		data["ad_offers"].append(offer.id)
 	for slot in station.schedule:
 		data["schedule"].append({
 			"start_time": slot.start_time,
@@ -418,7 +275,6 @@ func load_game() -> bool:
 	day = parsed.get("day", day)
 	difficulty = parsed.get("difficulty", difficulty)
 	betty_interest = parsed.get("betty_interest", betty_interest)
-	_rebuild_ads(parsed.get("active_ads", []), parsed.get("ad_offers", []))
 	var station_data: Dictionary = parsed.get("station", {})
 	station.cash = station_data.get("cash", station.cash)
 	station.debt = station_data.get("debt", station.debt)
@@ -429,12 +285,3 @@ func load_game() -> bool:
 	for slot_data in parsed.get("schedule", []):
 		station.schedule.append(Models.ScheduleSlot.new(slot_data))
 	return true
-
-func _rebuild_ads(active_ids: Array, offer_ids: Array) -> void:
-	station.ads = []
-	ad_offers = []
-	for ad in all_ads:
-		if active_ids.has(ad.id):
-			station.ads.append(ad)
-		elif offer_ids.has(ad.id):
-			ad_offers.append(ad)

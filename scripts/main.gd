@@ -70,9 +70,7 @@ func _show_schedule() -> void:
 func _update_schedule_view() -> void:
 	var lines: Array[String] = []
 	for slot in game_state.station.schedule:
-		var program = game_state.station.find_program(slot.program_id)
-		var title = program.title if program != null else slot.program_id
-		lines.append("%02d:00 - %02d:00 | %s" % [slot.start_time, slot.end_time, title])
+		lines.append("%02d:00 - %02d:00 | %s" % [slot.start_time, slot.end_time, slot.program_id])
 	if lines.is_empty():
 		lines.append("No programs scheduled yet. Drag shows in a future build!")
 	schedule_body.text = "\n".join(lines)
@@ -96,22 +94,7 @@ func _show_end_of_day() -> void:
 	_set_all_panels_hidden()
 	%EndPanel.visible = true
 	var summary := game_state.end_of_day()
-	var lines: Array[String] = []
-	lines.append("Payroll: $%d" % summary.payroll)
-	lines.append("Cash: $%d" % summary.cash)
-	lines.append("Now entering Day %d" % summary.day)
-	lines.append("")
-	lines.append("Ad tier: %s" % game_state.ad_tier_label())
-	lines.append("Betty interest: %d" % game_state.betty_interest)
-	var wins = game_state.check_win_conditions()
-	if not wins.is_empty():
-		lines.append("Win paths achieved: %s" % ", ".join(wins))
-	if not game_state.competitor_reports.is_empty():
-		lines.append("")
-		lines.append("Competitor recap:")
-		for report in game_state.competitor_reports:
-			lines.append("- %s" % report)
-	end_body.text = "\n".join(lines)
+	end_body.text = "Payroll: $%d\nCash: $%d\nNow entering Day %d" % [summary.payroll, summary.cash, summary.day]
 	_update_status("Day wrapped. New day, new ratings drama!")
 
 func _show_menu() -> void:
@@ -214,32 +197,8 @@ func _on_sfx_volume_changed(value: float) -> void:
 func _on_music_volume_changed(value: float) -> void:
 	audio_manager.set_music_volume(value)
 
-func _on_schedule_action(action: String) -> void:
-	match action:
-		"auto":
-			game_state.auto_plan_day()
-			_update_status("Auto-planned today's schedule.")
-			_update_schedule_view()
-		"clear":
-			game_state.clear_schedule()
-			_update_status("Schedule cleared.")
-			_update_schedule_view()
-
 func _on_screen_action(action: String) -> void:
 	match current_screen_id:
-		"news":
-			if action == "primary":
-				var boosted = game_state.refresh_news()
-				_update_status("Refreshed %d news blocks." % boosted)
-				_show_screen("News Desk", "Fresh segments delivered to the newsroom.", "news")
-		"ads":
-			var message := ""
-			if action == "primary":
-				message = game_state.accept_best_ad_offer()
-			else:
-				message = game_state.accept_next_ad_offer()
-			_update_status(message)
-			_show_screen("Ad Sales", _ads_body(), "ads")
 		"transmission":
 			var message := ""
 			if action == "primary":
@@ -248,14 +207,6 @@ func _on_screen_action(action: String) -> void:
 				message = game_state.buy_best_transmission_station()
 			_update_status(message)
 			_show_screen("Transmission Office", _transmission_body(), "transmission")
-		"content":
-			var message := ""
-			if action == "primary":
-				message = game_state.buy_best_content_offer()
-			else:
-				message = game_state.buy_next_content_offer()
-			_update_status(message)
-			_show_screen("Content Agency", _content_body(), "content")
 		"betty":
 			_update_status("Betty is impressed by your dedication!")
 			_show_screen("Betty's Lounge", _betty_body(), "betty")
@@ -265,28 +216,12 @@ func _configure_screen_actions() -> void:
 	primary_action_button.visible = false
 	secondary_action_button.visible = false
 	match current_screen_id:
-		"news":
-			action_row.visible = true
-			primary_action_button.visible = true
-			primary_action_button.text = "Refresh News"
-		"ads":
-			action_row.visible = true
-			primary_action_button.visible = true
-			secondary_action_button.visible = true
-			primary_action_button.text = "Sign Best Payout"
-			secondary_action_button.text = "Sign Next Offer"
 		"transmission":
 			action_row.visible = true
 			primary_action_button.visible = true
 			secondary_action_button.visible = true
 			primary_action_button.text = "Buy Next Tower"
 			secondary_action_button.text = "Buy Best Boost"
-		"content":
-			action_row.visible = true
-			primary_action_button.visible = true
-			secondary_action_button.visible = true
-			primary_action_button.text = "Buy Best Show"
-			secondary_action_button.text = "Buy Next Offer"
 		"betty":
 			action_row.visible = true
 			primary_action_button.visible = true
@@ -328,26 +263,13 @@ func _program_body() -> String:
 	var lines: Array[String] = []
 	for program in game_state.station.library:
 		var license = "%s ($%d)" % [program.license_type.capitalize(), program.purchase_price]
-		lines.append("%s [%s] | Airing $%d | %s | Pop %.2f | Fresh %.2f" % [
-			program.title,
-			program.category,
-			program.cost,
-			license,
-			program.popularity,
-			program.freshness,
-		])
+		lines.append("%s [%s] | Airing $%d | %s | Pop %.2f" % [program.title, program.category, program.cost, license, program.popularity])
 	return "\n".join(lines)
 
 func _ads_body() -> String:
-	var lines: Array[String] = ["Active contracts:"]
+	var lines: Array[String] = []
 	for ad in game_state.station.ads:
 		lines.append("%s | Slots %d | $%d" % [ad.advertiser_name, ad.required_slots, ad.payout])
-	lines.append("")
-	lines.append("Available offers:")
-	for offer in game_state.ad_offers:
-		lines.append("%s | Slots %d | $%d | Deadline %d" % [offer.advertiser_name, offer.required_slots, offer.payout, offer.deadline_day])
-	if game_state.ad_offers.is_empty():
-		lines.append("No offers available today.")
 	return "\n".join(lines)
 
 func _agency_body() -> String:
@@ -379,8 +301,6 @@ func _content_body() -> String:
 	var lines: Array[String] = ["Content Agency offers fresh packages for rent or sale:"]
 	for offer in game_state.content_offers:
 		lines.append("%s [%s] | %s $%d | Pop %.2f" % [offer.title, offer.category, offer.license_type, offer.price, offer.popularity])
-	if game_state.content_offers.is_empty():
-		lines.append("No offers available today.")
 	return "\n".join(lines)
 
 func _transmission_body() -> String:

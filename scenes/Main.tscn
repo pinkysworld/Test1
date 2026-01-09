@@ -404,14 +404,6 @@ fit_content = true
 scroll_active = false
 text = "Schedule goes here."
 
-[node name="ScheduleActions" type="HBoxContainer" parent="SchedulePanel/ScheduleContents"]
-
-[node name="AutoPlanButton" type="Button" parent="SchedulePanel/ScheduleContents/ScheduleActions"]
-text = "Auto Plan Day"
-
-[node name="ClearScheduleButton" type="Button" parent="SchedulePanel/ScheduleContents/ScheduleActions"]
-text = "Clear Schedule"
-
 [node name="ScheduleBack" type="Button" parent="SchedulePanel/ScheduleContents"]
 text = "Back to Hub"
 
@@ -501,7 +493,5 @@ text = "Back to Hub"
 [connection signal="value_changed" from="ConfigPanel/ConfigContents/SfxSlider" to="Main" method="_on_sfx_volume_changed"]
 [connection signal="value_changed" from="ConfigPanel/ConfigContents/MusicSlider" to="Main" method="_on_music_volume_changed"]
 [connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
-[connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleActions/AutoPlanButton" to="Main" method="_on_schedule_action" binds=["auto"]]
-[connection signal="pressed" from="SchedulePanel/ScheduleContents/ScheduleActions/ClearScheduleButton" to="Main" method="_on_schedule_action" binds=["clear"]]
 [connection signal="pressed" from="SimPanel/SimContents/SimBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
 [connection signal="pressed" from="EndPanel/EndContents/EndBack" to="Main" method="_on_hub_button_pressed" binds=["back"]]
