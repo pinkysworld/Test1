@@ -125,6 +125,7 @@ func simulate_day() -> Dictionary:
 		var program := station.find_program(slot.program_id)
 		if program == null:
 			continue
+		_apply_program_fatigue(program)
 		var audience = (program.audience_score() + station.reputation * 0.2 + _station_signal_bonus()) * difficulty_mod.audience
 		var revenue = int(station.revenue_for_ads(slot.attached_ads) * difficulty_mod.revenue)
 		var cost = program.cost
@@ -149,11 +150,20 @@ func end_of_day() -> Dictionary:
 	var payroll := station.total_payroll()
 	station.cash -= payroll
 	day += 1
+	_recover_freshness()
 	return {
 		"payroll": payroll,
 		"cash": station.cash,
 		"day": day,
 	}
+
+func refresh_news() -> int:
+	var boosted := 0
+	for program in station.library:
+		if program.category == "news":
+			program.freshness = min(1.0, program.freshness + 0.2)
+			boosted += 1
+	return boosted
 
 func buy_transmission_station(station_id: String) -> bool:
 	for offer in transmission_offers:
@@ -239,6 +249,18 @@ func _station_signal_bonus() -> float:
 		if station.transmission_stations.has(offer.id):
 			bonus += float(offer.audience_boost)
 	return bonus
+
+func _apply_program_fatigue(program: Models.Program) -> void:
+	if program.last_aired_day == day:
+		program.freshness = max(0.3, program.freshness - program.repeat_penalty)
+	else:
+		program.freshness = max(0.4, program.freshness - 0.05)
+	program.last_aired_day = day
+
+func _recover_freshness() -> void:
+	for program in station.library:
+		if program.last_aired_day < day:
+			program.freshness = min(1.0, program.freshness + 0.05)
 
 func _process_competitor_ai() -> void:
 	competitor_reports = []

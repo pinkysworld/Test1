@@ -13,6 +13,7 @@ var freshness: float
 var repeat_penalty: float
 var license_type: String
 var purchase_price: int
+var last_aired_day: int
 
 func _init(data: Dictionary) -> void:
 	id = data.get("id", "")
@@ -26,6 +27,7 @@ func _init(data: Dictionary) -> void:
 	repeat_penalty = data.get("repeat_penalty", 0.1)
 	license_type = data.get("license_type", "rent")
 	purchase_price = data.get("purchase_price", 0)
+	last_aired_day = data.get("last_aired_day", 0)
 
 func audience_score() -> float:
 	return popularity * freshness

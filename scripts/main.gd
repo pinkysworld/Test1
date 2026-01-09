@@ -227,6 +227,11 @@ func _on_schedule_action(action: String) -> void:
 
 func _on_screen_action(action: String) -> void:
 	match current_screen_id:
+		"news":
+			if action == "primary":
+				var boosted = game_state.refresh_news()
+				_update_status("Refreshed %d news blocks." % boosted)
+				_show_screen("News Desk", "Fresh segments delivered to the newsroom.", "news")
 		"ads":
 			var message := ""
 			if action == "primary":
@@ -252,6 +257,10 @@ func _configure_screen_actions() -> void:
 	primary_action_button.visible = false
 	secondary_action_button.visible = false
 	match current_screen_id:
+		"news":
+			action_row.visible = true
+			primary_action_button.visible = true
+			primary_action_button.text = "Refresh News"
 		"ads":
 			action_row.visible = true
 			primary_action_button.visible = true
@@ -305,7 +314,14 @@ func _program_body() -> String:
 	var lines: Array[String] = []
 	for program in game_state.station.library:
 		var license = "%s ($%d)" % [program.license_type.capitalize(), program.purchase_price]
-		lines.append("%s [%s] | Airing $%d | %s | Pop %.2f" % [program.title, program.category, program.cost, license, program.popularity])
+		lines.append("%s [%s] | Airing $%d | %s | Pop %.2f | Fresh %.2f" % [
+			program.title,
+			program.category,
+			program.cost,
+			license,
+			program.popularity,
+			program.freshness,
+		])
 	return "\n".join(lines)
 
 func _ads_body() -> String:
